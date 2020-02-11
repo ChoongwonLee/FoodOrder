@@ -8,6 +8,9 @@ const PORT = process.env.PORT || 8000;
 // Connect MongoDB
 connectDB();
 
+// Init Middleware
+app.use(express.json({ extended: false }));
+
 app.get('/', (req, res) => {
   res.json({ msg: 'Welcome to food order API...' });
 });
