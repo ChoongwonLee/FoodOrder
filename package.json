@@ -4,7 +4,8 @@
   "description": "Food order app",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "server": "env-cmd -f ./config/dev.env nodemon server.js"
   },
   "author": "",
   "license": "ISC",

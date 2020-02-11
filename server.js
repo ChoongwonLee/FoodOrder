@@ -1,8 +1,12 @@
 const express = require('express');
+const connectDB = require('./db/mongoose');
 
 const app = express();
 
 const PORT = process.env.PORT || 8000;
+
+// Connect MongoDB
+connectDB();
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Welcome to food order API...' });
