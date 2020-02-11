@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 
 // @route     POST api/admin
@@ -47,7 +47,25 @@ router.post(
 
       await admin.save();
 
-      res.send('Admin saved');
+      const payload = {
+        admin: {
+          id: admin.id
+        }
+      };
+      // Generate jwt token
+      jwt.sign(
+        payload,
+        process.env.JWT_SECRET,
+        {
+          expiresIn: 36000
+        },
+        (err, token) => {
+          if (err) {
+            throw err;
+          }
+          res.json({ token });
+        }
+      );
     } catch (err) {
       console.log(err.message);
       res.status(500).send('Server Error');
