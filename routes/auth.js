@@ -4,17 +4,25 @@ const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
+const auth = require('../middleware/auth');
 
 // @route     GET api/auth
 // @desc      GET logged in admin
-// @access Private
-router.get('/', (req, res) => {
-  res.send('Get logged in admin');
+// @access    Private
+router.get('/', auth, async (req, res) => {
+  try {
+    // get and send admin data except password
+    const admin = await await Admin.findById(req.admin.id).select('-password');
+    res.json(admin);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 // @route     GET api/auth
 // @desc      Auth admin & get token
-// @access Public
+// @access    Public
 router.post(
   '/',
   [
