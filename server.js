@@ -10,6 +10,8 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+// To access uploaded images (make images publically available)
+app.use('/api/menus/uploads', express.static('uploads'));
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Welcome to food order API...' });
