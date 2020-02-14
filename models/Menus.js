@@ -9,7 +9,7 @@ const MenuSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  indredients: {
+  ingredients: {
     type: String,
     required: true
   },

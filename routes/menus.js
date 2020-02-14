@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 const multer = require('multer');
 const auth = require('../middleware/auth');
 const Admin = require('../models/Admin');
@@ -37,7 +37,7 @@ const upload = multer({
 
 // @route     POST api/menus
 // @desc      Add new menu
-// @access Private
+// @access    Private
 router.post(
   '/',
   [
@@ -45,7 +45,7 @@ router.post(
     check('title', 'Please add menu title')
       .not()
       .isEmpty(),
-    check('indredients', 'Please add indredients')
+    check('ingredients', 'Please add ingredients')
       .not()
       .isEmpty(),
     check('description', 'Please add description')
@@ -66,13 +66,13 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, indredients, description, price } = req.body;
+    const { title, ingredients, description, price } = req.body;
     console.log(req.file);
     try {
       const newMenu = new Menu({
         admin: req.admin.id,
         title,
-        indredients,
+        ingredients,
         description,
         foodImage: req.file.path,
         price
@@ -90,7 +90,7 @@ router.post(
 
 // @route     GET api/menus
 // @desc      Get all menus
-// @access Public
+// @access    Public
 router.get('/', async (req, res) => {
   try {
     const menus = await Menu.find().sort({ date: -1 });
@@ -103,16 +103,62 @@ router.get('/', async (req, res) => {
 
 // @route     PUT api/menus
 // @desc      Update menu
-// @access Private
-router.put('/:id', (req, res) => {
-  res.send('Update menu');
+// @access    Private
+router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
+  console.log(req.file);
+  const { title, ingredients, description, price } = req.body;
+
+  const menuFields = {};
+  if (title) menuFields.title = title;
+  if (ingredients) menuFields.ingredients = ingredients;
+  if (description) menuFields.description = description;
+  if (price) menuFields.price = price;
+  if (req.file.path) menuFields.foodImage = req.file.path;
+
+  try {
+    let menu = await Menu.findById(req.params.id);
+
+    if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
+
+    // Make sure admin owns menu
+    if (menu.admin.toString() !== req.admin.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
+
+    menu = await Menu.findOneAndUpdate(
+      req.params.id,
+      { $set: menuFields },
+      { new: true }
+    );
+
+    res.json(menu);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err });
+  }
 });
 
 // @route     DELETE api/menus
 // @desc      Delte menu
-// @access Private
-router.delete('/:id', (req, res) => {
-  res.send('Delete menu');
+// @access    Private
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    let menu = await Menu.findById(req.params.id);
+
+    if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
+
+    // Make sure admin owns menu
+    if (menu.admin.toString() !== req.admin.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
+
+    await Menu.findByIdAndRemove(req.params.id);
+
+    res.json({ msg: 'Menu removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err });
+  }
 });
 
 module.exports = router;
