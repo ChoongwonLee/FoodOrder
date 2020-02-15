@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 const multer = require('multer');
 const auth = require('../middleware/auth');
 const Admin = require('../models/Admin');
-const Menu = require('../models/Menus');
+const Menus = require('../models/Menus');
 
 // set food image storage
 const storage = multer.diskStorage({
@@ -51,9 +51,6 @@ router.post(
     check('description', 'Please add description')
       .not()
       .isEmpty(),
-    check('foodImage', 'Please add food image')
-      .not()
-      .isEmpty(),
     check('price', 'Please add price')
       .not()
       .isEmpty(),
@@ -69,7 +66,7 @@ router.post(
     const { title, ingredients, description, price } = req.body;
     console.log(req.file);
     try {
-      const newMenu = new Menu({
+      const newMenu = new Menus({
         admin: req.admin.id,
         title,
         ingredients,
@@ -93,7 +90,7 @@ router.post(
 // @access    Public
 router.get('/', async (req, res) => {
   try {
-    const menus = await Menu.find().sort({ date: -1 });
+    const menus = await Menus.find().sort({ date: -1 });
     res.json(menus);
   } catch (err) {
     console.error(err.message);
@@ -116,7 +113,7 @@ router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
   if (req.file.path) menuFields.foodImage = req.file.path;
 
   try {
-    let menu = await Menu.findById(req.params.id);
+    let menu = await Menus.findById(req.params.id);
 
     if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
 
@@ -125,7 +122,7 @@ router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    menu = await Menu.findOneAndUpdate(
+    menu = await Menus.findOneAndUpdate(
       req.params.id,
       { $set: menuFields },
       { new: true }
@@ -143,7 +140,7 @@ router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
 // @access    Private
 router.delete('/:id', auth, async (req, res) => {
   try {
-    let menu = await Menu.findById(req.params.id);
+    let menu = await Menus.findById(req.params.id);
 
     if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
 
@@ -152,7 +149,7 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    await Menu.findByIdAndRemove(req.params.id);
+    await Menus.findByIdAndRemove(req.params.id);
 
     res.json({ msg: 'Menu removed' });
   } catch (err) {

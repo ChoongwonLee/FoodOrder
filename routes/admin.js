@@ -7,7 +7,7 @@ const Admin = require('../models/Admin');
 
 // @route     POST api/admin
 // @desc      Register admin
-// @access Public
+// @access    Public
 router.post(
   '/',
   [

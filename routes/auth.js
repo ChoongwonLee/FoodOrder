@@ -12,7 +12,7 @@ const auth = require('../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     // get and send admin data except password
-    const admin = await await Admin.findById(req.admin.id).select('-password');
+    const admin = await Admin.findById(req.admin.id).select('-password');
     res.json(admin);
   } catch (err) {
     console.error(err.message);

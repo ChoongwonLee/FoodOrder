@@ -14,6 +14,7 @@ module.exports = function(req, res, next) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // assign decoded admin to request admin
     req.admin = decoded.admin;
+    req.customer = decoded.customer;
     // move to next
     next();
   } catch (err) {
