@@ -8,7 +8,7 @@ const Customer = require('../models/Customer');
 
 // @route     POST api/customers
 // @desc      Create customer
-// @access Public
+// @access    Public
 router.post(
   '/',
   [

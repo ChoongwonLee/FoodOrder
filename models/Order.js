@@ -8,7 +8,8 @@ const OrderSchema = mongoose.Schema({
   },
   menus: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'menus'
+    ref: 'menus',
+    required: true
   },
   date: {
     type: Date,

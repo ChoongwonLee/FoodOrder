@@ -115,7 +115,7 @@ router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
   try {
     let menu = await Menus.findById(req.params.id);
 
-    if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
+    if (!menu) return res.status(404).json({ msg: 'Menu not found' });
 
     // Make sure admin owns menu
     if (menu.admin.toString() !== req.admin.id) {
