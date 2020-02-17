@@ -1,0 +1,9 @@
+export const ADD_MENU = 'ADD_MENU';
+export const DELETE_MENU = 'DELETE_MENU';
+export const SET_CURRENT = 'SET_CURRENT';
+export const CLEAR_CURRENT = 'CLEAR_CURRENT';
+export const UPDATE_MENU = 'UPDATE_MENU';
+export const FILTER_MENUS = 'FILTER_MENUS';
+export const CLEAR_FILTER = 'CLEAR_FILTER';
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
