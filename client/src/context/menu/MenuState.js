@@ -20,7 +20,7 @@ const MenuState = props => {
         title: 'Deluxe Hamburger',
         ingredients: 'beef, onions, cabage, cheese, tomato',
         description: 'Organic healthy and fresh bergur',
-        foodImage: '',
+        foodImage: process.env.PUBLIC_URL + 'images/burger.jpg',
         price: 10.99
       },
       {
@@ -28,7 +28,7 @@ const MenuState = props => {
         title: 'Noodle Soup',
         ingredients: 'beef, garlic, hot pepper, rice noodle',
         description: 'Noodle soup with organic ingredients!',
-        foodImage: '',
+        foodImage: process.env.PUBLIC_URL + 'images/pho.jpg',
         price: 12.99
       },
       {
@@ -36,7 +36,7 @@ const MenuState = props => {
         title: 'Potato Fries',
         ingredients: 'Sliced potato, salts',
         description: 'Fried by good oil',
-        foodImage: '',
+        foodImage: process.env.PUBLIC_URL + 'images/fries.jpeg',
         price: 6.49
       }
     ]
