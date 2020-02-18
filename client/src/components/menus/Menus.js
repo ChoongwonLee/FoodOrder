@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import MenuItem from './MenuItem';
 import MenuContext from '../../context/menu/menuContext';
 
@@ -13,9 +14,19 @@ const Menus = () => {
 
   return (
     <Fragment>
-      {filtered !== null
-        ? filtered.map(menu => <MenuItem key={menu.id} menu={menu} />)
-        : menus.map(menu => <MenuItem key={menu.id} menu={menu} />)}
+      <TransitionGroup>
+        {filtered !== null
+          ? filtered.map(menu => (
+              <CSSTransition key={menu.id} timeout={1000} classNames='item'>
+                <MenuItem menu={menu} />
+              </CSSTransition>
+            ))
+          : menus.map(menu => (
+              <CSSTransition key={menu.id} timeout={1000} classNames='item'>
+                <MenuItem menu={menu} />
+              </CSSTransition>
+            ))}
+      </TransitionGroup>
     </Fragment>
   );
 };
