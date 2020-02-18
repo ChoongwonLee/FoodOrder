@@ -40,7 +40,8 @@ const MenuState = props => {
         price: 6.49
       }
     ],
-    current: null
+    current: null,
+    filtered: null
   };
 
   const [state, dispatch] = useReducer(MenuReducer, initialState);
@@ -67,20 +68,33 @@ const MenuState = props => {
   };
 
   // Update Menu
+  const updateMenu = menu => {
+    dispatch({ type: UPDATE_MENU, payload: menu });
+  };
 
   // Filter Menus
+  const filterMenus = text => {
+    dispatch({ type: FILTER_MENUS, payload: text });
+  };
 
   // Clear Filter
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
 
   return (
     <MenuContext.Provider
       value={{
         menus: state.menus,
         current: state.current,
+        filtered: state.filtered,
         addMenu,
         deleteMenu,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        updateMenu,
+        filterMenus,
+        clearFilter
       }}
     >
       {props.children}

@@ -31,6 +31,26 @@ export default (state, action) => {
         ...state,
         current: null
       };
+    case UPDATE_MENU:
+      return {
+        ...state,
+        menus: state.menus.map(menu =>
+          menu.id === action.payload.id ? action.payload : menu
+        )
+      };
+    case FILTER_MENUS:
+      return {
+        ...state,
+        filtered: state.menus.filter(menu => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return menu.title.match(regex) || menu.ingredients.match(regex);
+        })
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null
+      };
     default:
       return state;
   }

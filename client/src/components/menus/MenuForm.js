@@ -1,9 +1,25 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import MenuContext from '../../context/menu/menuContext';
 
 const MenuForm = () => {
   const menuContext = useContext(MenuContext);
+
+  const { addMenu, clearCurrent, current, updateMenu } = menuContext;
+
+  useEffect(() => {
+    if (current !== null) {
+      setMenu(current);
+    } else {
+      setMenu({
+        title: '',
+        ingredients: '',
+        description: '',
+        foodImage: '',
+        price: ''
+      });
+    }
+  }, [menuContext, current]);
 
   const [menu, setMenu] = useState({
     title: '',
@@ -37,7 +53,11 @@ const MenuForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    menuContext.addMenu(menu);
+    if (current === null) {
+      addMenu(menu);
+    } else {
+      updateMenu(menu);
+    }
     setMenu({
       title: '',
       ingredients: '',
@@ -45,11 +65,16 @@ const MenuForm = () => {
       foodImage: '',
       price: ''
     });
+    clearAll();
+  };
+
+  const clearAll = () => {
+    clearCurrent();
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>Add Menu</h2>
+      <h2 className='text-primary'>{current ? 'Edit Menu' : 'Add Menu'}</h2>
       <input
         type='text'
         placeholder='Title'
@@ -78,7 +103,7 @@ const MenuForm = () => {
         value={price}
         onChange={onChange}
       />
-      <h5>Upload food image</h5>
+      <h5>{current ? 'Update' : 'Upload'} food image</h5>
       <input
         type='file'
         placeholder='Food Image'
@@ -90,10 +115,17 @@ const MenuForm = () => {
       <div>
         <input
           type='submit'
-          value='Add Menu'
+          value={current ? 'Update Menu' : 'Add Menu'}
           className='btn btn-primary btn-block'
         />
       </div>
+      {current && (
+        <div>
+          <button className='btn btn-light btn-block' onClick={clearAll}>
+            Clear
+          </button>
+        </div>
+      )}
     </form>
   );
 };

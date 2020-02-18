@@ -1,6 +1,7 @@
 import React from 'react';
 import Menus from '../menus/Menus';
 import MenuForm from '../menus/MenuForm';
+import MenuFilter from '../menus/MenuFilter';
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
         <MenuForm />
       </div>
       <div>
+        <MenuFilter />
         <Menus />
       </div>
     </div>
