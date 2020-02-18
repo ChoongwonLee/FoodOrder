@@ -6,12 +6,13 @@ const imageSize = { width: '120px', height: '100px' };
 
 const MenuItem = ({ menu }) => {
   const menuContext = useContext(MenuContext);
-  const { deleteMenu } = menuContext;
+  const { deleteMenu, setCurrent, clearCurrent } = menuContext;
 
   const { id, title, ingredients, description, foodImage, price } = menu;
 
   const onDelete = () => {
     deleteMenu(id);
+    clearCurrent();
   };
 
   return (
@@ -40,7 +41,12 @@ const MenuItem = ({ menu }) => {
         )}
       </ul>
       <p>
-        <button className='btn btn-dark btn-sm'>Edit</button>
+        <button
+          className='btn btn-dark btn-sm'
+          onClick={() => setCurrent(menu)}
+        >
+          Edit
+        </button>
         <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete
         </button>

@@ -39,7 +39,8 @@ const MenuState = props => {
         foodImage: process.env.PUBLIC_URL + 'images/fries.jpeg',
         price: 6.49
       }
-    ]
+    ],
+    current: null
   };
 
   const [state, dispatch] = useReducer(MenuReducer, initialState);
@@ -56,8 +57,14 @@ const MenuState = props => {
   };
 
   // Set Current Menu
+  const setCurrent = menu => {
+    dispatch({ type: SET_CURRENT, payload: menu });
+  };
 
   // Clear Current Menu
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // Update Menu
 
@@ -69,8 +76,11 @@ const MenuState = props => {
     <MenuContext.Provider
       value={{
         menus: state.menus,
+        current: state.current,
         addMenu,
-        deleteMenu
+        deleteMenu,
+        setCurrent,
+        clearCurrent
       }}
     >
       {props.children}

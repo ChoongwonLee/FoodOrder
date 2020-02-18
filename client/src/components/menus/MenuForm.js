@@ -10,7 +10,7 @@ const MenuForm = () => {
     ingredients: '',
     description: '',
     foodImage: '',
-    price: 0.0
+    price: ''
   });
 
   const { title, ingredients, description, foodImage, price } = menu;
@@ -43,7 +43,7 @@ const MenuForm = () => {
       ingredients: '',
       description: '',
       foodImage: '',
-      price: 0.0
+      price: ''
     });
   };
 
@@ -78,6 +78,7 @@ const MenuForm = () => {
         value={price}
         onChange={onChange}
       />
+      <h5>Upload food image</h5>
       <input
         type='file'
         placeholder='Food Image'
