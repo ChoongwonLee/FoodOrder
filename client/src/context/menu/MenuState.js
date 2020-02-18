@@ -45,6 +45,10 @@ const MenuState = props => {
   const [state, dispatch] = useReducer(MenuReducer, initialState);
 
   // Add Menu
+  const addMenu = menu => {
+    menu.id = uuid.v4();
+    dispatch({ type: ADD_MENU, payload: menu });
+  };
 
   // Delete Menu
 
@@ -61,7 +65,8 @@ const MenuState = props => {
   return (
     <MenuContext.Provider
       value={{
-        menus: state.menus
+        menus: state.menus,
+        addMenu
       }}
     >
       {props.children}
