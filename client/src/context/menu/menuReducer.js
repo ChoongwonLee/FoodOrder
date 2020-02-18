@@ -7,6 +7,7 @@ import {
   FILTER_MENUS,
   CLEAR_FILTER
 } from '../types';
+import menuContext from './menuContext';
 
 export default (state, action) => {
   switch (action.type) {
@@ -14,6 +15,11 @@ export default (state, action) => {
       return {
         ...state,
         menus: [...state.menus, action.payload]
+      };
+    case DELETE_MENU:
+      return {
+        ...state,
+        menus: state.menus.filter(menu => menu.id !== action.payload)
       };
     default:
       return state;

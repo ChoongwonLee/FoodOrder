@@ -51,6 +51,9 @@ const MenuState = props => {
   };
 
   // Delete Menu
+  const deleteMenu = id => {
+    dispatch({ type: DELETE_MENU, payload: id });
+  };
 
   // Set Current Menu
 
@@ -66,7 +69,8 @@ const MenuState = props => {
     <MenuContext.Provider
       value={{
         menus: state.menus,
-        addMenu
+        addMenu,
+        deleteMenu
       }}
     >
       {props.children}
