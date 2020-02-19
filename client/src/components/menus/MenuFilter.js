@@ -3,6 +3,7 @@ import MenuContext from '../../context/menu/menuContext';
 
 const MenuFilter = () => {
   const menuContext = useContext(MenuContext);
+  // eslint-disable-next-line
   const [text, setText] = useState('');
 
   const { filterMenus, clearFilter, filtered } = menuContext;
