@@ -8,7 +8,7 @@ const Menus = () => {
 
   const { menus, filtered } = menuContext;
 
-  if (!menus.length === 0) {
+  if (menus.length === 0) {
     return <h4>Please add a menu</h4>;
   }
 

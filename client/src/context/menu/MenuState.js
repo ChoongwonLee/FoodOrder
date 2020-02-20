@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import axios from 'axios';
 import uuid from 'uuid';
 import MenuContext from './menuContext';
 import MenuReducer from './menuReducer';
@@ -15,30 +16,30 @@ import {
 const MenuState = props => {
   const initialState = {
     menus: [
-      {
-        id: 1,
-        title: 'Deluxe Hamburger',
-        ingredients: 'beef, onions, cabage, cheese, tomato',
-        description: 'Organic healthy and fresh bergur',
-        foodImage: process.env.PUBLIC_URL + 'images/burger.jpg',
-        price: 10.99
-      },
-      {
-        id: 2,
-        title: 'Noodle Soup',
-        ingredients: 'beef, garlic, hot pepper, rice noodle',
-        description: 'Noodle soup with organic ingredients!',
-        foodImage: process.env.PUBLIC_URL + 'images/pho.jpg',
-        price: 12.99
-      },
-      {
-        id: 3,
-        title: 'Potato Fries',
-        ingredients: 'Sliced potato, salts',
-        description: 'Fried by good oil',
-        foodImage: process.env.PUBLIC_URL + 'images/fries.jpeg',
-        price: 6.49
-      }
+      // {
+      //   id: 1,
+      //   title: 'Deluxe Hamburger',
+      //   ingredients: 'beef, onions, cabage, cheese, tomato',
+      //   description: 'Organic healthy and fresh bergur',
+      //   foodImage: process.env.PUBLIC_URL + 'images/burger.jpg',
+      //   price: 10.99
+      // },
+      // {
+      //   id: 2,
+      //   title: 'Noodle Soup',
+      //   ingredients: 'beef, garlic, hot pepper, rice noodle',
+      //   description: 'Noodle soup with organic ingredients!',
+      //   foodImage: process.env.PUBLIC_URL + 'images/pho.jpg',
+      //   price: 12.99
+      // },
+      // {
+      //   id: 3,
+      //   title: 'Potato Fries',
+      //   ingredients: 'Sliced potato, salts',
+      //   description: 'Fried by good oil',
+      //   foodImage: process.env.PUBLIC_URL + 'images/fries.jpeg',
+      //   price: 6.49
+      // }
     ],
     current: null,
     filtered: null
