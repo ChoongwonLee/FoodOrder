@@ -71,7 +71,7 @@ router.post(
         title,
         ingredients,
         description,
-        foodImage: req.file.path,
+        // foodImage: req.file.path,
         price
       });
 

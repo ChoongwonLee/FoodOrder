@@ -37,15 +37,15 @@ const MenuForm = () => {
       [e.target.name]: e.target.value
     });
 
-  // LATER
-  const handleSelectedFile = e => {
-    // console.log(e.target.files[0].name);
-    // console.log(process.env.PUBLIC_URL + 'images/' + e.target.files[0].name);
-    setMenu({
-      ...menu,
-      foodImage: process.env.PUBLIC_URL + 'images/' + e.target.files[0].name
-    });
-  };
+  // // LATER
+  // const handleSelectedFile = e => {
+  //   // console.log(e.target.files[0].name);
+  //   // console.log(process.env.PUBLIC_URL + 'images/' + e.target.files[0].name);
+  //   setMenu({
+  //     ...menu,
+  //     foodImage: process.env.PUBLIC_URL + 'images/' + e.target.files[0].name
+  //   });
+  // };
 
   // const handleFileUpload = e => {
   //   axios.post('');
@@ -104,11 +104,11 @@ const MenuForm = () => {
         onChange={onChange}
       />
       <h5>{current ? 'Update' : 'Upload'} food image</h5>
-      <input
+      {/*<input
         type='file'
         placeholder='Food Image'
         onChange={handleSelectedFile}
-      />
+      />*/}
       {/*<button className='btn btn-sm' onClick={handleFileUpload}>
         Upload
       </button>*/}

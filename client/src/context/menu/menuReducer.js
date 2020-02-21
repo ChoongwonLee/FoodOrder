@@ -5,7 +5,8 @@ import {
   CLEAR_CURRENT,
   UPDATE_MENU,
   FILTER_MENUS,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  MENU_ERROR
 } from '../types';
 import menuContext from './menuContext';
 
@@ -50,6 +51,11 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null
+      };
+    case MENU_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
     default:
       return state;

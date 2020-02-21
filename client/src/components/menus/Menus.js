@@ -17,12 +17,12 @@ const Menus = () => {
       <TransitionGroup>
         {filtered !== null
           ? filtered.map(menu => (
-              <CSSTransition key={menu.id} timeout={1000} classNames='item'>
+              <CSSTransition key={menu._id} timeout={1000} classNames='item'>
                 <MenuItem menu={menu} />
               </CSSTransition>
             ))
           : menus.map(menu => (
-              <CSSTransition key={menu.id} timeout={1000} classNames='item'>
+              <CSSTransition key={menu._id} timeout={1000} classNames='item'>
                 <MenuItem menu={menu} />
               </CSSTransition>
             ))}

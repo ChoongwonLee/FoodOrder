@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import uuid from 'uuid';
 import MenuContext from './menuContext';
 import MenuReducer from './menuReducer';
 import {
@@ -10,7 +9,8 @@ import {
   CLEAR_CURRENT,
   UPDATE_MENU,
   FILTER_MENUS,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  MENU_ERROR
 } from '../types';
 
 const MenuState = props => {
@@ -20,7 +20,7 @@ const MenuState = props => {
       //   id: 1,
       //   title: 'Deluxe Hamburger',
       //   ingredients: 'beef, onions, cabage, cheese, tomato',
-      //   description: 'Organic healthy and fresh bergur',
+      //   description: 'Organic healthy and fresh burger',
       //   foodImage: process.env.PUBLIC_URL + 'images/burger.jpg',
       //   price: 10.99
       // },
@@ -42,15 +42,29 @@ const MenuState = props => {
       // }
     ],
     current: null,
-    filtered: null
+    filtered: null,
+    error: null
   };
 
   const [state, dispatch] = useReducer(MenuReducer, initialState);
 
   // Add Menu
-  const addMenu = menu => {
-    menu.id = uuid.v4();
-    dispatch({ type: ADD_MENU, payload: menu });
+  const addMenu = async menu => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/menus', menu, config);
+
+      dispatch({ type: ADD_MENU, payload: res.data });
+      // dispatch({ type: ADD_MENU, payload: menu });
+    } catch (err) {
+      dispatch({ type: MENU_ERROR, payload: err.response.msg });
+    }
   };
 
   // Delete Menu
@@ -89,6 +103,7 @@ const MenuState = props => {
         menus: state.menus,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addMenu,
         deleteMenu,
         setCurrent,
