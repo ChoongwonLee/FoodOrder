@@ -1,4 +1,5 @@
 import {
+  GET_MENUS,
   ADD_MENU,
   DELETE_MENU,
   SET_CURRENT,
@@ -12,15 +13,23 @@ import menuContext from './menuContext';
 
 export default (state, action) => {
   switch (action.type) {
+    case GET_MENUS:
+      return {
+        ...state,
+        menus: action.payload,
+        loading: false
+      };
     case ADD_MENU:
       return {
         ...state,
-        menus: [...state.menus, action.payload]
+        menus: [...state.menus, action.payload],
+        loading: false
       };
     case DELETE_MENU:
       return {
         ...state,
-        menus: state.menus.filter(menu => menu.id !== action.payload)
+        menus: state.menus.filter(menu => menu.id !== action.payload),
+        loading: false
       };
     case SET_CURRENT:
       return {
@@ -37,7 +46,8 @@ export default (state, action) => {
         ...state,
         menus: state.menus.map(menu =>
           menu.id === action.payload.id ? action.payload : menu
-        )
+        ),
+        loading: false
       };
     case FILTER_MENUS:
       return {

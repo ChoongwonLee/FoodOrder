@@ -3,50 +3,38 @@ import axios from 'axios';
 import MenuContext from './menuContext';
 import MenuReducer from './menuReducer';
 import {
+  GET_MENUS,
   ADD_MENU,
   DELETE_MENU,
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_MENU,
   FILTER_MENUS,
+  CLEAR_MENUS,
   CLEAR_FILTER,
   MENU_ERROR
 } from '../types';
 
 const MenuState = props => {
   const initialState = {
-    menus: [
-      // {
-      //   id: 1,
-      //   title: 'Deluxe Hamburger',
-      //   ingredients: 'beef, onions, cabage, cheese, tomato',
-      //   description: 'Organic healthy and fresh burger',
-      //   foodImage: process.env.PUBLIC_URL + 'images/burger.jpg',
-      //   price: 10.99
-      // },
-      // {
-      //   id: 2,
-      //   title: 'Noodle Soup',
-      //   ingredients: 'beef, garlic, hot pepper, rice noodle',
-      //   description: 'Noodle soup with organic ingredients!',
-      //   foodImage: process.env.PUBLIC_URL + 'images/pho.jpg',
-      //   price: 12.99
-      // },
-      // {
-      //   id: 3,
-      //   title: 'Potato Fries',
-      //   ingredients: 'Sliced potato, salts',
-      //   description: 'Fried by good oil',
-      //   foodImage: process.env.PUBLIC_URL + 'images/fries.jpeg',
-      //   price: 6.49
-      // }
-    ],
+    menus: null,
     current: null,
     filtered: null,
     error: null
   };
 
   const [state, dispatch] = useReducer(MenuReducer, initialState);
+
+  // Get Menus
+  const getMenus = async () => {
+    try {
+      const res = await axios.get('/api/menus');
+
+      dispatch({ type: GET_MENUS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: MENU_ERROR, payload: err.response.msg });
+    }
+  };
 
   // Add Menu
   const addMenu = async menu => {
@@ -103,6 +91,7 @@ const MenuState = props => {
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        getMenus,
         addMenu,
         deleteMenu,
         setCurrent,
