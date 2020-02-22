@@ -23,6 +23,10 @@ const MenuSchema = mongoose.Schema({
   price: {
     type: Number,
     required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

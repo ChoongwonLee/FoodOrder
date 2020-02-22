@@ -8,10 +8,10 @@ const MenuItem = ({ menu }) => {
   const menuContext = useContext(MenuContext);
   const { deleteMenu, setCurrent, clearCurrent } = menuContext;
 
-  const { id, title, ingredients, description, foodImage, price } = menu;
+  const { _id, title, ingredients, description, foodImage, price } = menu;
 
   const onDelete = () => {
-    deleteMenu(id);
+    deleteMenu(_id);
     clearCurrent();
   };
 

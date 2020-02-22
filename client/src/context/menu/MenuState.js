@@ -55,8 +55,14 @@ const MenuState = props => {
   };
 
   // Delete Menu
-  const deleteMenu = id => {
-    dispatch({ type: DELETE_MENU, payload: id });
+  const deleteMenu = async id => {
+    try {
+      const res = await axios.delete(`/api/menus/${id}`);
+
+      dispatch({ type: DELETE_MENU, payload: id });
+    } catch (err) {
+      dispatch({ type: MENU_ERROR, payload: err.response.msg });
+    }
   };
 
   // Clear Menu

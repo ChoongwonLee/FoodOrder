@@ -23,13 +23,13 @@ export default (state, action) => {
     case ADD_MENU:
       return {
         ...state,
-        menus: [...state.menus, action.payload],
+        menus: [action.payload, ...state.menus],
         loading: false
       };
     case DELETE_MENU:
       return {
         ...state,
-        menus: state.menus.filter(menu => menu.id !== action.payload),
+        menus: state.menus.filter(menu => menu._id !== action.payload),
         loading: false
       };
     case CLEAR_MENUS:
