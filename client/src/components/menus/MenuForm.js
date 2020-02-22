@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import MenuContext from '../../context/menu/menuContext';
 
 const MenuForm = () => {
@@ -29,7 +29,10 @@ const MenuForm = () => {
     price: ''
   });
 
-  const { title, ingredients, description, foodImage, price } = menu;
+  // // set image as local state
+  // const [image, setImage] = useState(null);
+
+  const { title, ingredients, description, price } = menu;
 
   const onChange = e =>
     setMenu({
@@ -37,22 +40,28 @@ const MenuForm = () => {
       [e.target.name]: e.target.value
     });
 
-  // // LATER
-  // const handleSelectedFile = e => {
-  //   // console.log(e.target.files[0].name);
-  //   // console.log(process.env.PUBLIC_URL + 'images/' + e.target.files[0].name);
-  //   setMenu({
-  //     ...menu,
-  //     foodImage: process.env.PUBLIC_URL + 'images/' + e.target.files[0].name
-  //   });
-  // };
-
-  // const handleFileUpload = e => {
-  //   axios.post('');
-  // }
+  // LATER
+  const handleSelectedFile = async e => {
+    console.log(e.target.files[0]);
+    let formData = new FormData();
+    const config = {
+      header: { 'content-type': 'multipart/form-data' }
+    };
+    formData.append('foodImage', e.target.files[0]);
+    try {
+      const res = await axios.post('/api/menus/upload', formData, config);
+      setMenu({
+        ...menu,
+        foodImage: res.data.path
+      });
+    } catch (err) {
+      console.error('Failed to upload!', err);
+    }
+  };
 
   const onSubmit = e => {
     e.preventDefault();
+    console.log(menu);
     if (current === null) {
       addMenu(menu);
     } else {
@@ -104,14 +113,11 @@ const MenuForm = () => {
         onChange={onChange}
       />
       <h5>{current ? 'Update' : 'Upload'} food image</h5>
-      {/*<input
+      <input
         type='file'
         placeholder='Food Image'
         onChange={handleSelectedFile}
-      />*/}
-      {/*<button className='btn btn-sm' onClick={handleFileUpload}>
-        Upload
-      </button>*/}
+      />
       <div>
         <input
           type='submit'

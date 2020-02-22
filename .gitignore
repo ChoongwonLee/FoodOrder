@@ -30,3 +30,4 @@ dev.env
 
 # upload files
 /uploads
+/client/public/uploads

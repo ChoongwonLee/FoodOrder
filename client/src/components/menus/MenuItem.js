@@ -20,7 +20,11 @@ const MenuItem = ({ menu }) => {
       <h3 className='text-primary text-left'>
         {title}{' '}
         <span style={{ float: 'right' }}>
-          <img src={foodImage} alt='foodImage' style={imageSize} />
+          <img
+            src={`http://localhost:8000/${foodImage}`}
+            alt='foodImage'
+            style={imageSize}
+          />
         </span>
       </h3>
       <ul className='list'>

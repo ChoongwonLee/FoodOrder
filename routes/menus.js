@@ -35,6 +35,24 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+// @route     POST api/menus/upload
+// @desc      Upload menu image
+// @access    Private
+router.post(
+  '/upload',
+  [auth, upload.single('foodImage')],
+  (req, res) => {
+    return res.json({
+      success: true,
+      path: res.req.file.path,
+      fileName: res.req.file.filename
+    });
+  },
+  (error, req, res, next) => {
+    return res.json({ suceess: false, error });
+  }
+);
+
 // @route     POST api/menus
 // @desc      Add new menu
 // @access    Private
@@ -53,25 +71,24 @@ router.post(
       .isEmpty(),
     check('price', 'Please add price')
       .not()
-      .isEmpty(),
-    upload.single('foodImage')
+      .isEmpty()
+    // upload.single('foodImage')
   ],
   async (req, res) => {
-    console.log(req.file);
     const errors = validationResult(req);
     if (!errors.isEmpty) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, ingredients, description, price } = req.body;
-    console.log(req.file);
+    const { title, ingredients, description, foodImage, price } = req.body;
+    // console.log(req.file);
     try {
       const newMenu = new Menus({
         admin: req.admin.id,
         title,
         ingredients,
         description,
-        // foodImage: req.file.path,
+        foodImage,
         price
       });
 
@@ -84,6 +101,55 @@ router.post(
     }
   }
 );
+
+// // @route     POST api/menus
+// // @desc      Add new menu
+// // @access    Private
+// router.post(
+//   '/',
+//   [
+//     auth,
+//     check('title', 'Please add menu title')
+//       .not()
+//       .isEmpty(),
+//     check('ingredients', 'Please add ingredients')
+//       .not()
+//       .isEmpty(),
+//     check('description', 'Please add description')
+//       .not()
+//       .isEmpty(),
+//     check('price', 'Please add price')
+//       .not()
+//       .isEmpty(),
+//     upload.single('foodImage')
+//   ],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+
+//     const { title, ingredients, description, price } = req.body;
+//     console.log(req.file);
+//     try {
+//       const newMenu = new Menus({
+//         admin: req.admin.id,
+//         title,
+//         ingredients,
+//         description,
+//         foodImage: req.file.path,
+//         price
+//       });
+
+//       const menu = await newMenu.save();
+
+//       res.json(menu);
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(500).json({ error: err });
+//     }
+//   }
+// );
 
 // @route     GET api/menus
 // @desc      Get all menus
