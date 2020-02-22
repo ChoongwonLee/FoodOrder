@@ -59,6 +59,11 @@ const MenuState = props => {
     dispatch({ type: DELETE_MENU, payload: id });
   };
 
+  // Clear Menu
+  const clearMenus = () => {
+    dispatch({ type: CLEAR_MENUS });
+  };
+
   // Set Current Menu
   const setCurrent = menu => {
     dispatch({ type: SET_CURRENT, payload: menu });
@@ -98,7 +103,8 @@ const MenuState = props => {
         clearCurrent,
         updateMenu,
         filterMenus,
-        clearFilter
+        clearFilter,
+        clearMenus
       }}
     >
       {props.children}

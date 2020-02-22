@@ -7,7 +7,8 @@ import {
   UPDATE_MENU,
   FILTER_MENUS,
   CLEAR_FILTER,
-  MENU_ERROR
+  MENU_ERROR,
+  CLEAR_MENUS
 } from '../types';
 import menuContext from './menuContext';
 
@@ -30,6 +31,14 @@ export default (state, action) => {
         ...state,
         menus: state.menus.filter(menu => menu.id !== action.payload),
         loading: false
+      };
+    case CLEAR_MENUS:
+      return {
+        ...state,
+        menus: null,
+        current: null,
+        filtered: null,
+        error: null
       };
     case SET_CURRENT:
       return {
