@@ -75,6 +75,7 @@ const MenuForm = () => {
       price: ''
     });
     clearAll();
+    e.target.value = '';
   };
 
   const clearAll = () => {
@@ -90,6 +91,7 @@ const MenuForm = () => {
         name='title'
         value={title}
         onChange={onChange}
+        required
       />
       <input
         type='text'
@@ -97,6 +99,7 @@ const MenuForm = () => {
         name='ingredients'
         value={ingredients}
         onChange={onChange}
+        required
       />
       <input
         type='text'
@@ -104,6 +107,7 @@ const MenuForm = () => {
         name='description'
         value={description}
         onChange={onChange}
+        required
       />
       <input
         type='text'
@@ -111,6 +115,7 @@ const MenuForm = () => {
         name='price'
         value={price}
         onChange={onChange}
+        required
       />
       <h5>{current ? 'Update' : 'Upload'} food image</h5>
       <input
