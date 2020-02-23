@@ -54,7 +54,7 @@ export default (state, action) => {
       return {
         ...state,
         menus: state.menus.map(menu =>
-          menu.id === action.payload.id ? action.payload : menu
+          menu._id === action.payload._id ? action.payload : menu
         ),
         loading: false
       };

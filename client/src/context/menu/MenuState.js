@@ -65,6 +65,23 @@ const MenuState = props => {
     }
   };
 
+  // Update Menu
+  const updateMenu = async menu => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/menus/${menu._id}`, menu, config);
+
+      dispatch({ type: UPDATE_MENU, payload: res.data });
+    } catch (err) {
+      dispatch({ type: MENU_ERROR, payload: err.response.msg });
+    }
+  };
+
   // Clear Menu
   const clearMenus = () => {
     dispatch({ type: CLEAR_MENUS });
@@ -78,11 +95,6 @@ const MenuState = props => {
   // Clear Current Menu
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
-  };
-
-  // Update Menu
-  const updateMenu = menu => {
-    dispatch({ type: UPDATE_MENU, payload: menu });
   };
 
   // Filter Menus

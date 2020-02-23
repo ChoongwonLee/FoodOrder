@@ -164,34 +164,42 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route     PUT api/menus
+// @route     PUT api/menus/:id
 // @desc      Update menu
 // @access    Private
-router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
-  console.log(req.file);
-  const { title, ingredients, description, price } = req.body;
+router.put('/:id', auth, async (req, res) => {
+  const { title, ingredients, description, price, foodImage } = req.body;
 
   const menuFields = {};
   if (title) menuFields.title = title;
   if (ingredients) menuFields.ingredients = ingredients;
   if (description) menuFields.description = description;
   if (price) menuFields.price = price;
-  if (req.file.path) menuFields.foodImage = req.file.path;
+  if (foodImage) menuFields.foodImage = foodImage;
 
   try {
     let menu = await Menus.findById(req.params.id);
 
     if (!menu) return res.status(404).json({ msg: 'Menu not found' });
 
-    // Make sure admin owns menu
-    if (menu.admin.toString() !== req.admin.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
-    }
+    // // Make sure admin owns menu
+    // if (menu.admin.toString() !== req.admin.id) {
+    //   return res.status(401).json({ msg: 'Not authorized' });
+    // }
 
-    menu = await Menus.findOneAndUpdate(
+    // THIS CODE CAUSES UPDATE PROBLEM!!!
+    // menu = await Menus.findOneAndUpdate(
+    //   req.params.id,
+    //   { $set: menuFields },
+    //   { new: true }
+    // );
+    menu = await Menus.findByIdAndUpdate(
       req.params.id,
       { $set: menuFields },
-      { new: true }
+      {
+        new: true,
+        runValidators: true
+      }
     );
 
     res.json(menu);
@@ -200,6 +208,43 @@ router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
     res.status(500).json({ error: err });
   }
 });
+
+// // @route     PUT api/menus/:id
+// // @desc      Update menu
+// // @access    Private
+// router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
+//   console.log(req.file);
+//   const { title, ingredients, description, price } = req.body;
+
+//   const menuFields = {};
+//   if (title) menuFields.title = title;
+//   if (ingredients) menuFields.ingredients = ingredients;
+//   if (description) menuFields.description = description;
+//   if (price) menuFields.price = price;
+//   if (req.file.path) menuFields.foodImage = req.file.path;
+
+//   try {
+//     let menu = await Menus.findById(req.params.id);
+
+//     if (!menu) return res.status(404).json({ msg: 'Menu not found' });
+
+//     // Make sure admin owns menu
+//     if (menu.admin.toString() !== req.admin.id) {
+//       return res.status(401).json({ msg: 'Not authorized' });
+//     }
+
+//     menu = await Menus.findOneAndUpdate(
+//       req.params.id,
+//       { $set: menuFields },
+//       { new: true }
+//     );
+
+//     res.json(menu);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).json({ error: err });
+//   }
+// });
 
 // @route     DELETE api/menus
 // @desc      Delte menu
@@ -210,10 +255,10 @@ router.delete('/:id', auth, async (req, res) => {
 
     if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
 
-    // Make sure admin owns menu
-    if (menu.admin.toString() !== req.admin.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
-    }
+    // // Make sure admin owns menu
+    // if (menu.admin.toString() !== req.admin.id) {
+    //   return res.status(401).json({ msg: 'Not authorized' });
+    // }
 
     await Menus.findByIdAndRemove(req.params.id);
 
