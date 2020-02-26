@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = mongoose.Schema({
-  customer: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'customer',
+    ref: 'users',
     required: true
   },
   menus: {
@@ -14,6 +14,14 @@ const OrderSchema = mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  customer: {
+    type: String,
+    required: true
+  },
+  menuTitle: {
+    type: String,
+    required: true
   },
   address: {
     type: String,

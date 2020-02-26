@@ -3,7 +3,8 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const multer = require('multer');
 const auth = require('../middleware/auth');
-const Admin = require('../models/Admin');
+// const Admin = require('../models/Admin');
+const User = require('../models/User');
 const Menus = require('../models/Menus');
 
 // set food image storage
@@ -18,10 +19,14 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   // to accept file
-  if (file.mimetype === 'image/jpeg' || filem.mimetype === 'image/png') {
+  if (
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/jpeg' ||
+    filem.mimetype === 'image/png'
+  ) {
     cb(null, true);
   } else {
-    cb(new Error('Only jpeg & png format!'), false);
+    cb(new Error('Only jpg, jpeg & png format!'), false);
   }
 };
 
@@ -84,7 +89,7 @@ router.post(
     // console.log(req.file);
     try {
       const newMenu = new Menus({
-        admin: req.admin.id,
+        user: req.user.id,
         title,
         ingredients,
         description,
@@ -133,7 +138,7 @@ router.post(
 //     console.log(req.file);
 //     try {
 //       const newMenu = new Menus({
-//         admin: req.admin.id,
+//         user: req.user.id,
 //         title,
 //         ingredients,
 //         description,
@@ -182,10 +187,10 @@ router.put('/:id', auth, async (req, res) => {
 
     if (!menu) return res.status(404).json({ msg: 'Menu not found' });
 
-    // // Make sure admin owns menu
-    // if (menu.admin.toString() !== req.admin.id) {
-    //   return res.status(401).json({ msg: 'Not authorized' });
-    // }
+    // Make sure user owns menu
+    if (menu.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
 
     // THIS CODE CAUSES UPDATE PROBLEM!!!
     // menu = await Menus.findOneAndUpdate(
@@ -205,7 +210,7 @@ router.put('/:id', auth, async (req, res) => {
     res.json(menu);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -255,10 +260,10 @@ router.delete('/:id', auth, async (req, res) => {
 
     if (!menu) return res.stats(404).json({ msg: 'Menu not found' });
 
-    // // Make sure admin owns menu
-    // if (menu.admin.toString() !== req.admin.id) {
-    //   return res.status(401).json({ msg: 'Not authorized' });
-    // }
+    // Make sure user owns menu
+    if (menu.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
 
     await Menus.findByIdAndRemove(req.params.id);
 

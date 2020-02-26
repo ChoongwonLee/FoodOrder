@@ -1,7 +1,7 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  ADMIN_LOADED,
+  USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -11,7 +11,7 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
-    case ADMIN_LOADED:
+    case USER_LOADED:
       return {
         ...state,
         isAuthenticated: true,
@@ -37,7 +37,7 @@ export default (state, action) => {
         token: null,
         isAuthenticated: null,
         loading: false,
-        admin: null,
+        user: null,
         error: action.payload
       };
     case CLEAR_ERRORS:

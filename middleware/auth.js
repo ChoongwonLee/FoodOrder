@@ -12,9 +12,8 @@ module.exports = function(req, res, next) {
   try {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // assign decoded admin to request admin
-    req.admin = decoded.admin;
-    req.customer = decoded.customer;
+    // assign decoded user to request user
+    req.user = decoded.user;
     // move to next
     next();
   } catch (err) {

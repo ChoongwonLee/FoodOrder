@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const MenuSchema = mongoose.Schema({
-  admin: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'admins'
+    ref: 'users'
   },
   title: {
     type: String,

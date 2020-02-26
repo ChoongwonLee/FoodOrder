@@ -6,7 +6,7 @@ import setAuthToken from '../../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  ADMIN_LOADED,
+  USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -19,14 +19,14 @@ const AuthState = props => {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: true,
-    admin: null,
+    user: null,
     error: null
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
-  // Load Admin
-  const loadAdmin = async () => {
+  // Load User
+  const loadUser = async () => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
@@ -34,7 +34,7 @@ const AuthState = props => {
     try {
       const res = await axios.get('/api/auth');
 
-      dispatch({ type: ADMIN_LOADED, payload: res.data });
+      dispatch({ type: USER_LOADED, payload: res.data });
     } catch (err) {
       dispatch({ type: AUTH_ERROR });
     }
@@ -49,14 +49,14 @@ const AuthState = props => {
     };
 
     try {
-      const res = await axios.post('/api/admin', formData, config);
+      const res = await axios.post('/api/user', formData, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
 
-      loadAdmin();
+      loadUser();
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
@@ -81,7 +81,7 @@ const AuthState = props => {
         payload: res.data
       });
 
-      loadAdmin();
+      loadUser();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
@@ -106,10 +106,10 @@ const AuthState = props => {
         token: state.token,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
-        admin: state.user,
+        user: state.user,
         error: state.error,
         register,
-        loadAdmin,
+        loadUser,
         login,
         logout,
         clearErrors

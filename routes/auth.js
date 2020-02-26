@@ -3,25 +3,25 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Admin = require('../models/Admin');
+const User = require('../models/User');
 const auth = require('../middleware/auth');
 
 // @route     GET api/auth
-// @desc      GET logged in admin
+// @desc      GET logged in user
 // @access    Private
 router.get('/', auth, async (req, res) => {
   try {
-    // get and send admin data except password
-    const admin = await Admin.findById(req.admin.id).select('-password');
-    res.json(admin);
+    // get and send user data except password
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send('Server Error: ', err.message);
   }
 });
 
 // @route     GET api/auth
-// @desc      Auth admin & get token
+// @desc      Auth user & get token
 // @access    Public
 router.post(
   '/',
@@ -38,21 +38,21 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      let admin = await Admin.findOne({ email });
+      let user = await User.findOne({ email });
 
-      if (!admin) {
+      if (!user) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
 
-      const isMatch = await bcrypt.compare(password, admin.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
 
       const payload = {
-        admin: {
-          id: admin.id
+        user: {
+          id: user.id
         }
       };
       // Generate jwt token
@@ -71,7 +71,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send(err.message);
     }
   }
 );

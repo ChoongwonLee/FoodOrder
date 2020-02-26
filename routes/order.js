@@ -4,63 +4,54 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const Order = require('../models/Order');
 const Menus = require('../models/Menus');
-const Customer = require('../models/Customer');
-const Admin = require('../models/Admin');
+// const Customer = require('../models/Customer');
+// const Admin = require('../models/Admin');
+const User = require('../models/User');
 
-// @route     POST api/orders
+// @route     POST api/orders/:menuId
 // @desc      Add new order from menus
 // @access    Private
-router.post(
-  '/',
-  [
-    auth,
-    check('address', 'Please add delivery address')
-      .not()
-      .isEmpty(),
-    check('quantity', 'Please add quantity')
-      .not()
-      .isEmpty()
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+router.post('/:menuId', auth, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const menus = await Menus.findById(req.params.menuId);
+    if (!menus) {
+      return res.status(404).json({ msg: 'menu not found!' });
     }
 
-    const { menusId, date, address, quantity } = req.body;
-
-    try {
-      const menus = await Menus.findById(menusId);
-      if (!menus) {
-        return res.status(404).json({ msg: 'menu not found!' });
-      }
+    const customer = await User.findById(req.user.id);
+    if (customer) {
       const newOrder = new Order({
-        customer: req.customer.id,
-        menus: menusId,
-        date,
-        address,
-        quantity
+        user: req.user.id,
+        menus: req.params.menuId,
+        customer: customer.name,
+        menuTitle: menus.title,
+        address: customer.address
       });
 
       const order = await newOrder.save();
 
       res.status(201).json({ order });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err });
     }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err.message);
   }
-);
+});
 
 // @route     GET api/orders
 // @desc      Get customer order
 // @access    Private
 router.get('/', auth, async (req, res) => {
   try {
-    const orders = await Order.find({ customer: req.customer.id }).sort({
+    const orders = await Order.find({ user: req.user.id }).sort({
       date: -1
     });
-    res.json({ orders, customer: req.customer.id });
+    res.json(orders);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: err });
@@ -71,12 +62,11 @@ router.get('/', auth, async (req, res) => {
 // @desc      Update order
 // @access    Private
 router.put('/:id', auth, async (req, res) => {
-  const { menusId, address, quantity } = req.body;
+  const { address, quantity } = req.body;
 
   const orderFields = {};
-  if (menusId) orderFields.menus = menusId;
   if (address) orderFields.address = address;
-  if (quantity) orderFields.menus = quantity;
+  if (quantity) orderFields.quantity = quantity;
 
   try {
     let order = await Order.findById(req.params.id);
@@ -84,7 +74,7 @@ router.put('/:id', auth, async (req, res) => {
     if (!order) return res.status(404).json({ msg: 'Order not found!' });
 
     // Make sure customer owns menu
-    if (order.customer.toString() !== req.customer.id) {
+    if (order.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
@@ -111,7 +101,7 @@ router.delete('/:id', auth, async (req, res) => {
     if (!order) return res.status(404).json({ msg: 'Order not found' });
 
     // Make sure customer owns menu
-    if (order.customer.toString() !== req.customer.id) {
+    if (order.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
@@ -129,8 +119,8 @@ router.delete('/:id', auth, async (req, res) => {
 // @access    Private
 router.get('/adminorders', auth, async (req, res) => {
   try {
-    const admin = await Admin.findById(req.admin.id);
-    if (admin) {
+    const user = await User.findById(req.user.id);
+    if (user) {
       const orders = await Order.find();
       res.json(orders);
     } else {
@@ -147,8 +137,8 @@ router.get('/adminorders', auth, async (req, res) => {
 // @access    Private
 router.get('/adminorders/:id', auth, async (req, res) => {
   try {
-    const admin = await Admin.findById(req.admin.id);
-    if (admin) {
+    const user = await User.findById(req.user.id);
+    if (user) {
       const order = await Order.findById(req.params.id);
       res.json(order);
     } else {

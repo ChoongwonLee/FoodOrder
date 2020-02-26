@@ -42,7 +42,6 @@ const MenuForm = () => {
 
   // LATER
   const handleSelectedFile = async e => {
-    console.log(e.target.files[0]);
     let formData = new FormData();
     const config = {
       header: { 'content-type': 'multipart/form-data' }
@@ -61,7 +60,6 @@ const MenuForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(menu);
     if (current === null) {
       addMenu(menu);
     } else {
