@@ -89,7 +89,6 @@ router.post(
     check('name', 'Please add name')
       .not()
       .isEmpty(),
-    check('email', 'Please include a valid email').isEmail(),
     check('role', 'Customer role must be 1')
       .equals('1')
       .not()
@@ -107,10 +106,11 @@ router.post(
     const { name, email, role, address } = req.body;
 
     try {
-      let user = await User.findOne({ name });
+      // Because this is demo, so skip customer registeration for fase demonstration
+      let user = await User.findOne({ email });
 
       if (user) {
-        return res.status(400).json({ msg: 'Customer already exists' });
+        res.status(400).json({ msg: 'Email already exists' });
       }
 
       user = new User({

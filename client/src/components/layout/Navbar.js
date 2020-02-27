@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import MenuContext from '../../context/menu/menuContext';
 
-const Navbar = ({ title, icon }) => {
+const Navbar = props => {
   const authContext = useContext(AuthContext);
   const menuContext = useContext(MenuContext);
 
   const { isAuthenticated, logout, user } = authContext;
   const { clearMenus } = menuContext;
+
+  const { title, icon } = props;
 
   const onLogout = () => {
     logout();
@@ -18,7 +20,21 @@ const Navbar = ({ title, icon }) => {
 
   const authLinks = (
     <Fragment>
-      <li>Hello {user && user.name}</li>
+      <li>
+        Hello {user && user.name} {'  '}
+      </li>
+      <li>
+        <Link to='/'>Home</Link>
+      </li>
+      <li>
+        <Link to='/about'>About</Link>
+      </li>
+      <li>
+        <Link to='/register'>Register</Link>
+      </li>
+      <li>
+        <Link to='/admin'>Admin</Link>
+      </li>
       <li>
         <a onClick={onLogout} href='#!'>
           <i className='fas fa-sign-out-alt' />{' '}

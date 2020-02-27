@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import AuthContext from '../../context/auth/authContext';
 import MenuContext from '../../context/menu/menuContext';
 import ProductItem from '../products/ProductItem';
 import MenuFilter from '../menus/MenuFilter';
@@ -9,8 +10,9 @@ import Spinner from '../layout/Spinner';
 //           2.     make & bring customer & order context here to add order
 //           2.1.   define types -> define context, state, and reducer
 
-const CustomerHome = () => {
+const CustomerHome = props => {
   const menuContext = useContext(MenuContext);
+  const authContext = useContext(AuthContext);
 
   const { menus, filtered, getMenus, loading } = menuContext;
 
@@ -18,6 +20,10 @@ const CustomerHome = () => {
     getMenus();
     // eslint-disable-next-line
   }, []);
+
+  if (!authContext.isAuthenticated) {
+    props.history.push('/');
+  }
 
   if (menus !== null && menus.length === 0 && !loading) {
     return <h4>There is no menu available now. Please visit again later.</h4>;

@@ -8,7 +8,13 @@ const CustomerForm = props => {
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { registerCustomer, error, clearErrors, isAuthenticated } = authContext;
+  const {
+    registerCustomer,
+    loginCustomer,
+    error,
+    clearErrors,
+    isAuthenticated
+  } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -16,11 +22,8 @@ const CustomerForm = props => {
     }
 
     // if customer exists, login customer and redirect to menu selection
-    if (error === 'Customer already exists') {
+    if (error === 'Email already exists') {
       setAlert(error, 'danger');
-      setTimeout(() => {
-        props.history.push('/selection');
-      }, 2000);
     }
   }, [error, isAuthenticated, props.history]);
 
@@ -40,7 +43,6 @@ const CustomerForm = props => {
   const onSubmit = e => {
     e.preventDefault();
     registerCustomer({ name, address, role, email });
-    // props.history.push('/menuselection');
   };
 
   return (
@@ -78,7 +80,6 @@ const CustomerForm = props => {
             value={email}
             onChange={onChange}
             placeholder='For Order Confirmation'
-            required
           />
         </div>
         <input
