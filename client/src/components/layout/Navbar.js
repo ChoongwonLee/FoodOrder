@@ -8,7 +8,7 @@ const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const menuContext = useContext(MenuContext);
 
-  const { isAuthenticated, logout, admin } = authContext;
+  const { isAuthenticated, logout, user } = authContext;
   const { clearMenus } = menuContext;
 
   const onLogout = () => {
@@ -18,7 +18,7 @@ const Navbar = ({ title, icon }) => {
 
   const authLinks = (
     <Fragment>
-      <li>Hello {admin && admin.name}</li>
+      <li>Hello {user && user.name}</li>
       <li>
         <a onClick={onLogout} href='#!'>
           <i className='fas fa-sign-out-alt' />{' '}
@@ -40,7 +40,7 @@ const Navbar = ({ title, icon }) => {
         <Link to='/register'>Register</Link>
       </li>
       <li>
-        <Link to='/login'>Login</Link>
+        <Link to='/admin'>Admin</Link>
       </li>
     </Fragment>
   );

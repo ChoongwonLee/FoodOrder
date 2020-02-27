@@ -1,27 +1,19 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MenuContext from '../../context/menu/menuContext';
-import OrderContext from '../../context/order/orderContext';
 
 const imageSize = { width: '180px', height: '160px' };
 
 const ProductItem = ({ menu }) => {
   // eslint-disable-next-line
   const menuContext = useContext(MenuContext);
-  const orderContext = useContext(OrderContext);
 
   const { _id, title, ingredients, description, foodImage, price } = menu;
-
-  const { addOrder } = orderContext;
 
   const [order, setOrder] = useState({
     customer: null,
     menus: null
   });
-
-  const onClick = e => {
-    addOrder(order);
-  };
 
   return (
     <div className='card bg-light'>
@@ -53,9 +45,7 @@ const ProductItem = ({ menu }) => {
         )}
       </ul>
       <p>
-        <button className='btn btn-primary btn-sm' onClick={onClick}>
-          Add
-        </button>
+        <button className='btn btn-primary btn-sm'>Add</button>
       </p>
     </div>
   );

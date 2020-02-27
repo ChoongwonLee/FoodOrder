@@ -7,29 +7,39 @@ const Register = props => {
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { register, error, clearErrors, isAuthenticated } = authContext;
+  const {
+    register,
+    error,
+    clearErrors,
+    isAuthenticated,
+    isAdmin
+  } = authContext;
 
   useEffect(() => {
     // redirect to the home after registration
-    if (isAuthenticated) {
-      props.history.push('/');
+    if (isAuthenticated && isAdmin) {
+      props.history.push('/admin');
     }
 
     if (error === 'admin already exists') {
       setAlert(error, 'danger');
       clearErrors();
+    } else if (error === 'Admin exists. Only 1 Admin allowed') {
+      setAlert(error, 'danger');
+      clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated, isAdmin, props.history]);
 
   const [admin, setAdmin] = useState({
     name: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
+    role: 0
   });
 
-  const { name, email, password, password2 } = admin;
+  const { name, email, password, password2, role } = admin;
 
   const onChange = e => setAdmin({ ...admin, [e.target.name]: e.target.value });
 
@@ -43,6 +53,7 @@ const Register = props => {
       register({
         name,
         email,
+        role,
         password
       });
     }

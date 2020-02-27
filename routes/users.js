@@ -35,9 +35,9 @@ router.post(
 
     try {
       // Limit number of admin
-      let user = await User.find({ role: 1 });
+      let user = await User.find({ role: 0 });
 
-      if (user) {
+      if (user.length >= 1) {
         return res
           .status(400)
           .json({ msg: 'Admin exists. Only 1 Admin allowed' });
