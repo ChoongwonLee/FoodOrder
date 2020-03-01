@@ -30,7 +30,8 @@ router.post('/:menuId', auth, async (req, res) => {
         menus: req.params.menuId,
         customer: customer.name,
         menuTitle: menus.title,
-        address: customer.address
+        address: customer.address,
+        quantity: req.body.quantity
       });
 
       const order = await newOrder.save();

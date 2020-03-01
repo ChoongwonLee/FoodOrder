@@ -251,7 +251,7 @@ router.put('/:id', auth, async (req, res) => {
 //   }
 // });
 
-// @route     DELETE api/menus
+// @route     DELETE api/menus:id
 // @desc      Delte menu
 // @access    Private
 router.delete('/:id', auth, async (req, res) => {
@@ -270,7 +270,21 @@ router.delete('/:id', auth, async (req, res) => {
     res.json({ msg: 'Menu removed' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// @route     GET api/menus/:id
+// @desc      Get menu by ID
+// @access    Public
+router.get('/:id', async (req, res) => {
+  try {
+    let menu = await Menus.findById(req.params.id);
+    if (!menu) return res.status(404).json({ msg: 'Menu not found' });
+    res.json(menu);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 

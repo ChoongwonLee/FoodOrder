@@ -8,13 +8,15 @@ import {
   FILTER_MENUS,
   CLEAR_FILTER,
   MENU_ERROR,
-  CLEAR_MENUS
+  CLEAR_MENUS,
+  GET_MENU_BY_ID
 } from '../types';
 import menuContext from './menuContext';
 
 export default (state, action) => {
   switch (action.type) {
     case GET_MENUS:
+    case GET_MENU_BY_ID:
       return {
         ...state,
         menus: action.payload,

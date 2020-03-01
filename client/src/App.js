@@ -7,10 +7,12 @@ import About from './components/pages/About';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alerts from './components/layout/Alerts';
-import MenuSelection from './components/pages/MenuSelection';
+import MenuSelection from './components/customer/MenuSelection';
+import SelectDetail from './components/customer/SelectionDetail/SelectDetail';
 import NotFound from './components/pages/NotFound';
 import MenuState from './context/menu/MenuState';
 import AuthState from './context/auth/AuthState';
+import OrderState from './context/order/OrderState';
 import AlertState from './context/alert/AlertState';
 import setAuthToken from './utils/setAuthToken';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -24,25 +26,32 @@ const App = () => {
   return (
     <AuthState>
       <MenuState>
-        <AlertState>
-          <Router>
-            <Fragment>
-              <Navbar />
-              <div className='container'>
-                <Alerts />
-                <Switch>
-                  <Route exact path='/' component={CustomerForm} />
-                  <Route exact path='/about' component={About} />
-                  <Route exact path='/register' component={Register} />
-                  <Route exact path='/login' component={Login} />
-                  <Route exact path='/selection' component={MenuSelection} />
-                  <PrivateRoute exact path='/admin' component={AdminHome} />
-                  <Route component={NotFound} />
-                </Switch>
-              </div>
-            </Fragment>
-          </Router>
-        </AlertState>
+        <OrderState>
+          <AlertState>
+            <Router>
+              <Fragment>
+                <Navbar />
+                <div className='container'>
+                  <Alerts />
+                  <Switch>
+                    <Route exact path='/' component={CustomerForm} />
+                    <Route exact path='/about' component={About} />
+                    <Route exact path='/register' component={Register} />
+                    <Route exact path='/login' component={Login} />
+                    <Route exact path='/selection' component={MenuSelection} />
+                    <Route
+                      exact
+                      path='/selection/:id'
+                      component={SelectDetail}
+                    />
+                    <PrivateRoute exact path='/admin' component={AdminHome} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </div>
+              </Fragment>
+            </Router>
+          </AlertState>
+        </OrderState>
       </MenuState>
     </AuthState>
   );

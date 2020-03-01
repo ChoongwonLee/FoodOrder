@@ -1,4 +1,5 @@
 export const GET_MENUS = 'GET_MENUS';
+export const GET_MENU_BY_ID = 'GET_MENU_BY_ID';
 export const ADD_MENU = 'ADD_MENU';
 export const DELETE_MENU = 'DELETE_MENU';
 export const SET_CURRENT = 'SET_CURRENT';
@@ -21,3 +22,5 @@ export const LOGIN_CUSTOMER_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const ADD_ORDER = 'ADD_ORDER';
+export const ORDER_ERROR = 'ORDER_ERROR';

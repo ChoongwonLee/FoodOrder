@@ -4,6 +4,7 @@ import MenuContext from './menuContext';
 import MenuReducer from './menuReducer';
 import {
   GET_MENUS,
+  GET_MENU_BY_ID,
   ADD_MENU,
   DELETE_MENU,
   SET_CURRENT,
@@ -32,7 +33,18 @@ const MenuState = props => {
 
       dispatch({ type: GET_MENUS, payload: res.data });
     } catch (err) {
-      dispatch({ type: MENU_ERROR, payload: err.response.msg });
+      dispatch({ type: MENU_ERROR, payload: err.response.message });
+    }
+  };
+
+  // Get Menu By ID
+  const getMenuById = async id => {
+    try {
+      const res = await axios.get(`/api/menus/${id}`);
+
+      dispatch({ type: GET_MENU_BY_ID, payload: res.data });
+    } catch (err) {
+      dispatch({ type: MENU_ERROR, payload: err.message });
     }
   };
 
@@ -122,7 +134,8 @@ const MenuState = props => {
         updateMenu,
         filterMenus,
         clearFilter,
-        clearMenus
+        clearMenus,
+        getMenuById
       }}
     >
       {props.children}

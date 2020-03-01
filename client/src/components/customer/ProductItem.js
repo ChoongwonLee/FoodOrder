@@ -1,19 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MenuContext from '../../context/menu/menuContext';
 
 const imageSize = { width: '180px', height: '160px' };
 
 const ProductItem = ({ menu }) => {
-  // eslint-disable-next-line
-  const menuContext = useContext(MenuContext);
-
   const { _id, title, ingredients, description, foodImage, price } = menu;
-
-  const [order, setOrder] = useState({
-    customer: null,
-    menus: null
-  });
 
   return (
     <div className='card bg-light'>
@@ -45,7 +37,9 @@ const ProductItem = ({ menu }) => {
         )}
       </ul>
       <p>
-        <button className='btn btn-primary btn-sm'>Add</button>
+        <Link to={`/selection/${_id}`}>
+          <button className='btn btn-primary btn-sm'>Choose</button>
+        </Link>
       </p>
     </div>
   );

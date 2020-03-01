@@ -53,6 +53,7 @@ const MenuForm = () => {
         ...menu,
         foodImage: res.data.path
       });
+      e.target.value = '';
     } catch (err) {
       console.error('Failed to upload!', err);
     }
@@ -73,7 +74,6 @@ const MenuForm = () => {
       price: ''
     });
     clearAll();
-    e.target.value = '';
   };
 
   const clearAll = () => {
