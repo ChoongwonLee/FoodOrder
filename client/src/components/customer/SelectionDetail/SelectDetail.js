@@ -11,9 +11,9 @@ const SelectDetail = props => {
 
   const menuId = props.match.params.id;
 
-  const { menus, getMenuById } = menuContext;
+  const { menus, getMenuById, getMenus, current } = menuContext;
   const { isAuthenticated } = authContext;
-  const { addOrder, orders } = orderContext;
+  const { addOrder } = orderContext;
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -31,7 +31,12 @@ const SelectDetail = props => {
       ...order,
       menuId
     });
-  }, []);
+    // eslint-disable-next-line
+  }, [current]);
+
+  // useEffect(() => {
+  //   getMenus();
+  // }, [props.history.location]);
 
   const handleOrder = () => {
     addOrder(order);
@@ -40,45 +45,54 @@ const SelectDetail = props => {
   return (
     <div className='container'>
       <div className='text-center'>
-        <h1>{menus.title}</h1>
+        <h1>{current && current.title}</h1>
       </div>
       <div className='card grid-2'>
         <div className='all-center'>
           <img
-            src={`http://localhost:8000/${menus.foodImage}`}
+            src={`http://localhost:8000/${current && current.foodImage}`}
             className='round-img'
-            alt='food image'
+            alt='foodImage'
             style={{ width: '300px' }}
           />
         </div>
         <div className='card bg-light'>
           <ul className='list'>
-            {menus.ingredients && (
+            {current && (
               <li>
-                <i className='fas fa-carrot'></i>
-                <h3>Ingredients</h3>
-                <p>{menus.ingredients}</p>
+                <p>
+                  <i className='fas fa-carrot' />
+                  <h3>Ingredients</h3>
+                </p>
+                <p>{current.ingredients}</p>
               </li>
             )}
-            {menus.description && (
+            {current && (
               <li>
-                <i className='far fa-comment-alt'></i>
-                <h3>Description</h3>
-                <p>{menus.description}</p>
+                <p>
+                  <i className='far fa-comment-alt' />
+                  <h3>Description</h3>
+                </p>
+                <p>{current.description}</p>
               </li>
             )}
           </ul>
-          <p>
-            <button className='btn btn-primary btn-sm' onClick={handleOrder}>
-              Add to order
-            </button>
-            <button
-              className='btn btn-dark btn-sm'
-              onClick={() => props.history.goBack()}
-            >
-              Go back
-            </button>
-          </p>
+        </div>
+        <div>
+          <button
+            className='btn btn-primary btn-sm'
+            onClick={handleOrder}
+            style={{ justifyContent: 'space-between' }}
+          >
+            Add to order
+          </button>
+          <button
+            className='btn btn-dark btn-sm'
+            onClick={() => props.history.goBack()}
+            style={{ justifyContent: 'space-between' }}
+          >
+            Go back
+          </button>
         </div>
       </div>
     </div>

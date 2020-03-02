@@ -1,19 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
-import AlertContext from '../../context/alert/alertContext';
+// import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
 // Todo: Add google map geo code api to validate address
 const CustomerForm = props => {
-  const alertContext = useContext(AlertContext);
+  // const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const { setAlert } = alertContext;
+  // const { setAlert } = alertContext;
   const {
     registerCustomer,
-    loginCustomer,
     error,
-    clearErrors,
-    isAuthenticated
+    /*clearErrors,*/ isAuthenticated
   } = authContext;
 
   useEffect(() => {
@@ -21,10 +19,11 @@ const CustomerForm = props => {
       props.history.push('/selection');
     }
 
-    // if customer exists, login customer and redirect to menu selection
-    if (error === 'Email already exists') {
-      setAlert(error, 'danger');
-    }
+    // // if customer exists, login customer and redirect to menu selection
+    // if (error === 'Email already exists') {
+    //   setAlert(error, 'danger');
+    //   clearErrors();
+    // }
   }, [error, isAuthenticated, props.history]);
 
   const [customer, setCustomer] = useState({

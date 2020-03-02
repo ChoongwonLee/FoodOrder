@@ -11,12 +11,12 @@ import {
   CLEAR_MENUS,
   GET_MENU_BY_ID
 } from '../types';
+// eslint-disable-next-line
 import menuContext from './menuContext';
 
 export default (state, action) => {
   switch (action.type) {
     case GET_MENUS:
-    case GET_MENU_BY_ID:
       return {
         ...state,
         menus: action.payload,
@@ -43,6 +43,7 @@ export default (state, action) => {
         error: null
       };
     case SET_CURRENT:
+    case GET_MENU_BY_ID:
       return {
         ...state,
         current: action.payload

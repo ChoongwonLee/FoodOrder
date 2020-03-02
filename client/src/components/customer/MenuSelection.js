@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import MenuContext from '../../context/menu/menuContext';
 import OrderContext from '../../context/order/orderContext';
@@ -13,12 +13,12 @@ const MenuSelection = props => {
 
   const { menus, filtered, getMenus, loading } = menuContext;
 
-  // const { setCurrent, addOrder, current } = orderContext;
+  const { setCurrent, addOrder, current, orders } = orderContext;
 
   useEffect(() => {
     getMenus();
     // eslint-disable-next-line
-  }, [loading]);
+  }, []);
 
   // const [order, setOrder] = useState({
   //   menuId: ''

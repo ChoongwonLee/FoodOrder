@@ -1,4 +1,5 @@
 import { ADD_ORDER, ORDER_ERROR, SET_CURRENT } from '../types';
+// eslint-disable-next-line
 import OrderContext from './orderContext';
 
 export default (state, action) => {
