@@ -1,8 +1,22 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import Modal from 'react-modal';
 import MenuContext from '../../../context/menu/menuContext';
 import AuthContext from '../../../context/auth/authContext';
 import OrderContext from '../../../context/order/orderContext';
+
+// Modal
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+Modal.setAppElement('body');
 
 const SelectDetail = props => {
   const menuContext = useContext(MenuContext);
@@ -11,9 +25,9 @@ const SelectDetail = props => {
 
   const menuId = props.match.params.id;
 
-  const { menus, getMenuById, getMenus, current } = menuContext;
+  const { /*menus,*/ getMenuById, /*getMenus,*/ current } = menuContext;
   const { isAuthenticated } = authContext;
-  const { addOrder, orders } = orderContext;
+  const { addOrder } = orderContext;
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -38,8 +52,16 @@ const SelectDetail = props => {
   //   getMenus();
   // }, [props.history.location]);
 
-  const handleOrder = () => {
+  // Modal state & functions
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleAddOrder = () => {
     addOrder(order);
+    setModalIsOpen(true);
   };
 
   return (
@@ -80,7 +102,7 @@ const SelectDetail = props => {
             <br />
           </ul>
           <div className='card grid-2' style={{ border: 'none' }}>
-            <button className='btn btn-primary btn-sm' onClick={handleOrder}>
+            <button className='btn btn-primary btn-sm' onClick={handleAddOrder}>
               Add to order
             </button>
             <button
@@ -91,6 +113,17 @@ const SelectDetail = props => {
             </button>
           </div>
         </div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={modalStyles}
+        >
+          <h3>Menu Added!</h3>
+          <br />
+          <button className='btn btn-dark btn-block' onClick={closeModal}>
+            Close
+          </button>
+        </Modal>
       </div>
     </div>
   );

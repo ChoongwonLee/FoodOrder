@@ -69,6 +69,7 @@ const MenuState = props => {
   // Delete Menu
   const deleteMenu = async id => {
     try {
+      // eslint-disable-next-line
       const res = await axios.delete(`/api/menus/${id}`);
 
       dispatch({ type: DELETE_MENU, payload: id });

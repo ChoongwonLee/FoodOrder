@@ -8,7 +8,7 @@ const Navbar = props => {
   const authContext = useContext(AuthContext);
   const menuContext = useContext(MenuContext);
 
-  const { isAuthenticated, isAdmin, logout, user } = authContext;
+  const { isAuthenticated, isAdmin, logout /*user*/ } = authContext;
   const { clearMenus } = menuContext;
 
   const { title, icon } = props;

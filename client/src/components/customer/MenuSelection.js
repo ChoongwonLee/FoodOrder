@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import MenuContext from '../../context/menu/menuContext';
-import OrderContext from '../../context/order/orderContext';
+// import OrderContext from '../../context/order/orderContext';
 import ProductItem from './ProductItem';
 import MenuFilter from '../menus/MenuFilter';
 import Spinner from '../layout/Spinner';
@@ -9,11 +9,11 @@ import Spinner from '../layout/Spinner';
 const MenuSelection = props => {
   const menuContext = useContext(MenuContext);
   const authContext = useContext(AuthContext);
-  const orderContext = useContext(OrderContext);
+  // const orderContext = useContext(OrderContext);
 
   const { menus, filtered, getMenus, loading } = menuContext;
 
-  const { setCurrent, addOrder, current, orders } = orderContext;
+  // const { setCurrent, addOrder, current, orders } = orderContext;
 
   useEffect(() => {
     getMenus();
