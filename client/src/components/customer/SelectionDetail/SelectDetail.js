@@ -13,7 +13,7 @@ const SelectDetail = props => {
 
   const { menus, getMenuById, getMenus, current } = menuContext;
   const { isAuthenticated } = authContext;
-  const { addOrder } = orderContext;
+  const { addOrder, orders } = orderContext;
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -45,7 +45,7 @@ const SelectDetail = props => {
   return (
     <div className='container'>
       <div className='text-center'>
-        <h1>{current && current.title}</h1>
+        <h1 className='text-primary'>{current && current.title}</h1>
       </div>
       <div className='card grid-2'>
         <div className='all-center'>
@@ -60,39 +60,36 @@ const SelectDetail = props => {
           <ul className='list'>
             {current && (
               <li>
-                <p>
-                  <i className='fas fa-carrot' />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <h3>Ingredients</h3>
-                </p>
+                  <i className='fas fa-carrot' />
+                </div>
                 <p>{current.ingredients}</p>
               </li>
             )}
+            <br />
             {current && (
               <li>
-                <p>
-                  <i className='far fa-comment-alt' />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <h3>Description</h3>
-                </p>
+                  <i className='far fa-comment-alt' />
+                </div>
                 <p>{current.description}</p>
               </li>
             )}
+            <br />
           </ul>
-        </div>
-        <div>
-          <button
-            className='btn btn-primary btn-sm'
-            onClick={handleOrder}
-            style={{ justifyContent: 'space-between' }}
-          >
-            Add to order
-          </button>
-          <button
-            className='btn btn-dark btn-sm'
-            onClick={() => props.history.goBack()}
-            style={{ justifyContent: 'space-between' }}
-          >
-            Go back
-          </button>
+          <div className='card grid-2' style={{ border: 'none' }}>
+            <button className='btn btn-primary btn-sm' onClick={handleOrder}>
+              Add to order
+            </button>
+            <button
+              className='btn btn-dark btn-sm'
+              onClick={() => props.history.goBack()}
+            >
+              Go back
+            </button>
+          </div>
         </div>
       </div>
     </div>
