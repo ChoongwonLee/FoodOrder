@@ -23,4 +23,6 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const ADD_ORDER = 'ADD_ORDER';
+export const GET_CUSTOMER_ORDER = 'GET_CUSTOMER_ORDER';
+export const UPDATE_CUSTOMER_ORDER = 'UPDATE_CUSTOMER_ORDER';
 export const ORDER_ERROR = 'ORDER_ERROR';

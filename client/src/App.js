@@ -9,6 +9,8 @@ import Login from './components/auth/Login';
 import Alerts from './components/layout/Alerts';
 import MenuSelection from './components/customer/MenuSelection';
 import SelectDetail from './components/customer/SelectionDetail/SelectDetail';
+import Cart from './components/customer/Cart';
+import OrderConfirmation from './components/customer/OrderConfirmation';
 import NotFound from './components/pages/NotFound';
 import MenuState from './context/menu/MenuState';
 import AuthState from './context/auth/AuthState';
@@ -43,6 +45,12 @@ const App = () => {
                       exact
                       path='/selection/:id'
                       component={SelectDetail}
+                    />
+                    <Route exact path='/cart' component={Cart} />
+                    <Route
+                      exact
+                      path='/orderconfirm'
+                      component={OrderConfirmation}
                     />
                     <PrivateRoute exact path='/admin' component={AdminHome} />
                     <Route component={NotFound} />

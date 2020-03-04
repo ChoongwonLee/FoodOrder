@@ -23,6 +23,10 @@ const OrderSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  menuImage: {
+    type: String,
+    required: true
+  },
   address: {
     type: String,
     required: true
@@ -30,6 +34,10 @@ const OrderSchema = mongoose.Schema({
   quantity: {
     type: Number,
     default: 1
+  },
+  price: {
+    type: Number,
+    required: true
   }
 });
 

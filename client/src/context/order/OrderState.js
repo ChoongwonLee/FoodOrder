@@ -2,7 +2,12 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import OrderContext from './orderContext';
 import OrderReducer from './orderReducer';
-import { ADD_ORDER, ORDER_ERROR, SET_CURRENT } from '../types';
+import {
+  ADD_ORDER,
+  ORDER_ERROR,
+  GET_CUSTOMER_ORDER,
+  UPDATE_CUSTOMER_ORDER
+} from '../types';
 
 const OrderState = props => {
   const initialState = {
@@ -35,9 +40,32 @@ const OrderState = props => {
     }
   };
 
-  // Set Current Order
-  const setCurrent = order => {
-    dispatch({ type: SET_CURRENT, payload: order });
+  // Get Customer Order
+  const getOrder = async () => {
+    try {
+      const res = await axios.get('/api/orders');
+
+      dispatch({ type: GET_CUSTOMER_ORDER, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ORDER_ERROR, payload: err.message });
+    }
+  };
+
+  // Update Customer Order
+  const updateOrder = async order => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/orders/${order._id}`, order, config);
+
+      dispatch({ type: UPDATE_CUSTOMER_ORDER, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ORDER_ERROR, payload: err.message });
+    }
   };
 
   return (
@@ -48,7 +76,8 @@ const OrderState = props => {
         filtered: state.filtered,
         error: state.error,
         addOrder,
-        setCurrent
+        getOrder,
+        updateOrder
       }}
     >
       {props.children}

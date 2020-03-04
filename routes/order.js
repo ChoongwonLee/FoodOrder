@@ -30,8 +30,10 @@ router.post('/:menuId', auth, async (req, res) => {
         menus: req.params.menuId,
         customer: customer.name,
         menuTitle: menus.title,
+        menuImage: menus.foodImage,
         address: customer.address,
-        quantity: req.body.quantity
+        quantity: req.body.quantity,
+        price: menus.price
       });
 
       const order = await newOrder.save();
@@ -63,11 +65,12 @@ router.get('/', auth, async (req, res) => {
 // @desc      Update order
 // @access    Private
 router.put('/:id', auth, async (req, res) => {
-  const { address, quantity } = req.body;
+  const { /*address,*/ quantity, price } = req.body;
 
   const orderFields = {};
-  if (address) orderFields.address = address;
+  // if (address) orderFields.address = address;
   if (quantity) orderFields.quantity = quantity;
+  if (price) orderFields.quantity = quantity;
 
   try {
     let order = await Order.findById(req.params.id);
@@ -88,7 +91,7 @@ router.put('/:id', auth, async (req, res) => {
     res.json(order);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -111,7 +114,7 @@ router.delete('/:id', auth, async (req, res) => {
     res.json({ msg: 'Order removed' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -147,7 +150,7 @@ router.get('/adminorders/:id', auth, async (req, res) => {
     }
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 

@@ -119,6 +119,7 @@ const SelectDetail = props => {
           style={modalStyles}
         >
           <h3>Menu Added!</h3>
+          <p>To edit quantity, go to cart.</p>
           <br />
           <button className='btn btn-dark btn-block' onClick={closeModal}>
             Close
