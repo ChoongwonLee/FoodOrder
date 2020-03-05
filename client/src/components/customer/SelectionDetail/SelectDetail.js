@@ -18,6 +18,8 @@ const modalStyles = {
 };
 Modal.setAppElement('body');
 
+const imageSize = { width: '300px', height: '250px' };
+
 const SelectDetail = props => {
   const menuContext = useContext(MenuContext);
   const authContext = useContext(AuthContext);
@@ -69,13 +71,12 @@ const SelectDetail = props => {
       <div className='text-center'>
         <h1 className='text-primary'>{current && current.title}</h1>
       </div>
-      <div className='card grid-2'>
-        <div className='all-center'>
+      <div className='card grid-2' style={{ border: '0.5px solid' }}>
+        <div className='card' style={{ border: 'none' }}>
           <img
             src={`http://localhost:8000/${current && current.foodImage}`}
-            className='round-img'
             alt='foodImage'
-            style={{ width: '300px' }}
+            style={imageSize}
           />
         </div>
         <div className='card bg-light'>
@@ -119,7 +120,7 @@ const SelectDetail = props => {
           style={modalStyles}
         >
           <h3>Menu Added!</h3>
-          <p>To edit quantity, go to cart.</p>
+          <p>To update quantity, go to cart.</p>
           <br />
           <button className='btn btn-dark btn-block' onClick={closeModal}>
             Close

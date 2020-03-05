@@ -2,7 +2,8 @@ import {
   ADD_ORDER,
   ORDER_ERROR,
   GET_CUSTOMER_ORDER,
-  UPDATE_CUSTOMER_ORDER
+  UPDATE_CUSTOMER_ORDER,
+  REMOVE_CUSTOMER_ORDER
 } from '../types';
 // eslint-disable-next-line
 import OrderContext from './orderContext';
@@ -27,6 +28,12 @@ export default (state, action) => {
         orders: state.orders.map(order =>
           order._id === action.payload._id ? action.payload : order
         ),
+        loading: false
+      };
+    case REMOVE_CUSTOMER_ORDER:
+      return {
+        ...state,
+        orders: state.orders.filter(order => order._id !== action.payload),
         loading: false
       };
     case ORDER_ERROR:

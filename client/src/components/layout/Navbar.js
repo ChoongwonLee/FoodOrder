@@ -93,7 +93,6 @@ const Navbar = props => {
           <li>
             <Link to='/cart'>
               <i className='fas fa-shopping-cart' />
-              <span>Cart</span>
             </Link>
           </li>
           <li>

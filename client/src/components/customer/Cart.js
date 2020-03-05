@@ -10,7 +10,7 @@ const Cart = () => {
 
   useEffect(() => {
     getOrder();
-  }, []);
+  }, [orders]);
 
   if (orders.length === 0 && !loading) {
     return <h4>No order item found. Please select your food.</h4>;
@@ -28,12 +28,27 @@ const Cart = () => {
   return (
     <div className='container'>
       <h2 className='text-center text-primary'>Shopping Cart</h2>
+      <br />
       <h3>Your total is ${getTotal()} </h3>
-      {orders.length !== 0 &&
-        !loading &&
-        orders.map(order => {
-          return <CartItem key={order._id} order={order} />;
-        })}
+      <table className='table'>
+        <thead>
+          <tr>
+            <th className='th'>Image</th>
+            <th className='th'>Item</th>
+            <th className='th'>Qty</th>
+            <th className='th'>Price</th>
+            <th className='th'>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.length !== 0 &&
+            !loading &&
+            orders.map(order => {
+              return <CartItem key={order._id} order={order} />;
+            })}
+        </tbody>
+      </table>
+      <br />
       <Link to='/orderconfirm'>
         <button className='btn btn-primary'>Check Out</button>
       </Link>

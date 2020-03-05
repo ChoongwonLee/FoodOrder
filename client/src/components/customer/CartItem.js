@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import OrderContext from '../../context/order/orderContext';
 
@@ -7,9 +7,9 @@ const imageSize = { width: '120px', height: '100px' };
 const CartItem = ({ order }) => {
   const orderContext = useContext(OrderContext);
 
-  const { menuTitle, menuImage, quantity, price } = order;
+  const { _id, menuTitle, menuImage, quantity, price } = order;
 
-  const { updateOrder, orders } = orderContext;
+  const { updateOrder, removeOrder } = orderContext;
 
   const [update, setUpdate] = useState({
     ...order,
@@ -27,34 +27,43 @@ const CartItem = ({ order }) => {
     });
   };
 
+  const handleRemove = () => {
+    removeOrder(_id);
+  };
+
   useEffect(() => {
     setUpdate(update);
     updateOrder(update);
   }, [update]);
 
   return (
-    <div className='card grid-4'>
-      <div className='all-center'>
-        <img
-          src={`http://localhost:8000/${menuImage}`}
-          alt='foodImage'
-          style={imageSize}
-        />
-      </div>
-      <div className='all-center' style={{ alignContent: 'center' }}>
-        {menuTitle}
-      </div>
-      <div className='all-center'>
-        <select value={option.quantity} onChange={handleChange}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-        </select>
-      </div>
-      <div className='all-center'>{price * quantity}</div>
-    </div>
+    <Fragment>
+      <tr>
+        <td className='td'>
+          <img
+            src={`http://localhost:8000/${menuImage}`}
+            alt='foodImage'
+            style={imageSize}
+          />
+        </td>
+        <td className='td'>{menuTitle}</td>
+        <td className='td'>
+          <select value={option.quantity} onChange={handleChange}>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </select>
+        </td>
+        <td className='td'>{price * quantity}</td>
+        <td className='td'>
+          <button className='btn btn-danger btn-sm' onClick={handleRemove}>
+            Remove
+          </button>
+        </td>
+      </tr>
+    </Fragment>
   );
 };
 

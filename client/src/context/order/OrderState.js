@@ -6,7 +6,8 @@ import {
   ADD_ORDER,
   ORDER_ERROR,
   GET_CUSTOMER_ORDER,
-  UPDATE_CUSTOMER_ORDER
+  UPDATE_CUSTOMER_ORDER,
+  REMOVE_CUSTOMER_ORDER
 } from '../types';
 
 const OrderState = props => {
@@ -68,6 +69,17 @@ const OrderState = props => {
     }
   };
 
+  // Remove Customer Order
+  const removeOrder = async id => {
+    try {
+      const res = await axios.delete(`/api/orders/${id}`);
+
+      dispatch({ type: REMOVE_CUSTOMER_ORDER, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ORDER_ERROR, payload: err.message });
+    }
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -77,7 +89,8 @@ const OrderState = props => {
         error: state.error,
         addOrder,
         getOrder,
-        updateOrder
+        updateOrder,
+        removeOrder
       }}
     >
       {props.children}
