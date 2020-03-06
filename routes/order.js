@@ -7,6 +7,10 @@ const Menus = require('../models/Menus');
 // const Customer = require('../models/Customer');
 // const Admin = require('../models/Admin');
 const User = require('../models/User');
+const {
+  sendNotificationEmail,
+  sendConfirmationEmail
+} = require('../email/account');
 
 // @route     POST api/orders/:menuId
 // @desc      Add new order from menus
@@ -112,6 +116,39 @@ router.delete('/:id', auth, async (req, res) => {
     await Order.findByIdAndRemove(req.params.id);
 
     res.json({ msg: 'Order removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// @route     POST api/orders/email
+// @desc      Send customer order
+// @access    Private
+router.get('/email', auth, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user.id }).sort({
+      date: -1
+    });
+
+    if (orders.length === 0 || !orders) {
+      return res.json({ msg: 'No order found!' });
+    }
+
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.json({ msg: 'No user found!' });
+    }
+
+    if (!user.email) {
+      return res.json({ msg: 'The user does NOT have email!' });
+    }
+
+    sendNotificationEmail(user.email, user.name, orders);
+    sendConfirmationEmail(user.email, user.name, orders);
+
+    res.json({ msg: 'Email successfully sent!' });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: err.message });

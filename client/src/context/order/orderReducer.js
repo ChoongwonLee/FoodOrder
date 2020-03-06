@@ -3,7 +3,8 @@ import {
   ORDER_ERROR,
   GET_CUSTOMER_ORDER,
   UPDATE_CUSTOMER_ORDER,
-  REMOVE_CUSTOMER_ORDER
+  REMOVE_CUSTOMER_ORDER,
+  SEND_ORDER_EMAIL
 } from '../types';
 // eslint-disable-next-line
 import OrderContext from './orderContext';
@@ -35,6 +36,11 @@ export default (state, action) => {
         ...state,
         orders: state.orders.filter(order => order._id !== action.payload),
         loading: false
+      };
+    case SEND_ORDER_EMAIL:
+      return {
+        ...state,
+        result: action.payload
       };
     case ORDER_ERROR:
       return {

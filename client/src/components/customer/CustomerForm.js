@@ -46,9 +46,9 @@ const CustomerForm = props => {
 
   return (
     <div className='form-container'>
-      <h2>
+      <h1>
         <span className='text-primary'>Delivery Information</span>
-      </h2>
+      </h1>
 
       <form onSubmit={onSubmit}>
         <div className='form-group'>

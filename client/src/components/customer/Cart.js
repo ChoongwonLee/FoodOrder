@@ -1,15 +1,17 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+// import { Link } from 'react-router-dom';
 import OrderContext from '../../context/order/orderContext';
 import CartItem from './CartItem';
 
-const Cart = () => {
+const Cart = props => {
   const ordercontext = useContext(OrderContext);
 
-  const { orders, loading, getOrder } = ordercontext;
+  const { orders, loading, getOrder, sendEmail } = ordercontext;
 
   useEffect(() => {
     getOrder();
+    // eslint-disable-next-line
   }, [orders]);
 
   if (orders.length === 0 && !loading) {
@@ -23,6 +25,11 @@ const Cart = () => {
     }
     let total = sum.toFixed(2);
     return total;
+  };
+
+  const handleCheckout = async () => {
+    sendEmail();
+    props.history.push('/orderconfirm');
   };
 
   return (
@@ -49,9 +56,9 @@ const Cart = () => {
         </tbody>
       </table>
       <br />
-      <Link to='/orderconfirm'>
-        <button className='btn btn-primary'>Check Out</button>
-      </Link>
+      <button className='btn btn-primary' onClick={handleCheckout}>
+        Check Out
+      </button>
     </div>
   );
 };

@@ -7,14 +7,16 @@ import {
   ORDER_ERROR,
   GET_CUSTOMER_ORDER,
   UPDATE_CUSTOMER_ORDER,
-  REMOVE_CUSTOMER_ORDER
+  REMOVE_CUSTOMER_ORDER,
+  SEND_ORDER_EMAIL
 } from '../types';
 
 const OrderState = props => {
   const initialState = {
     orders: [],
-    current: null,
-    filtered: null,
+    // current: null,
+    // filtered: null,
+    result: null,
     error: null
   };
 
@@ -80,6 +82,17 @@ const OrderState = props => {
     }
   };
 
+  // Send Order email
+  const sendEmail = async () => {
+    try {
+      const res = await axios.get('/api/orders/email');
+
+      dispatch({ type: SEND_ORDER_EMAIL, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ORDER_ERROR, payload: err.message });
+    }
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -90,7 +103,8 @@ const OrderState = props => {
         addOrder,
         getOrder,
         updateOrder,
-        removeOrder
+        removeOrder,
+        sendEmail
       }}
     >
       {props.children}
