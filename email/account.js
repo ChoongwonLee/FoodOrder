@@ -20,7 +20,7 @@ const sendNotificationEmail = (email, name, orders) => {
     return template;
   };
 
-  const text = `Customer ${name}, has order below:\n${getOrderInfo()}\nTOTAL: ${getTotal()}`;
+  const text = `Customer ${name}, has order below:\n\n${getOrderInfo()}\nTOTAL: ${getTotal()}`;
 
   sgMail.send({
     to: 'bigstep810@gmail.com',
@@ -48,7 +48,7 @@ const sendConfirmationEmail = (email, name, orders) => {
     return template;
   };
 
-  const text = `Dear ${name}, please check your order below:\n${getOrderInfo()}\nTOTAL: ${getTotal()}`;
+  const text = `Dear ${name}, please check your order below:\n\n${getOrderInfo()}\nTOTAL: ${getTotal()}`;
 
   sgMail.send({
     to: email,

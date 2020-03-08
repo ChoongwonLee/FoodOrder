@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import Menus from '../menus/Menus';
-import MenuForm from '../menus/MenuForm';
-import MenuFilter from '../menus/MenuFilter';
-import AuthContext from '../../context/auth/authContext';
+import Menus from '../components/menus/Menus';
+import MenuForm from '../components/menus/MenuForm';
+import MenuFilter from '../components/menus/MenuFilter';
+import AuthContext from '../context/auth/authContext';
 
-const Home = () => {
+const AdminMenu = () => {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AdminMenu;

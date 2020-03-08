@@ -24,7 +24,7 @@ app.use('/api/users', require('./routes/users'));
 // app.use('/api/admin', require('./routes/admin'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/menus', require('./routes/menus'));
-app.use('/api/customers', require('./routes/customers'));
+// app.use('/api/customers', require('./routes/customers'));
 app.use('/api/orders', require('./routes/order'));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

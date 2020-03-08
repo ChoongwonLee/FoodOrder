@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import CustomerForm from './components/customer/CustomerForm';
-import AdminHome from './components/pages/AdminHome';
+import AdminHome from './admin/AdminHome';
+import AdminMenu from './admin/AdminMenu';
+import AdminOrder from './admin/orders/AdminOrder';
 import About from './components/pages/About';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -53,6 +55,16 @@ const App = () => {
                       component={OrderConfirmation}
                     />
                     <PrivateRoute exact path='/admin' component={AdminHome} />
+                    <PrivateRoute
+                      exact
+                      path='/admin/menus'
+                      component={AdminMenu}
+                    />
+                    <PrivateRoute
+                      exact
+                      path='/admin/orders'
+                      component={AdminOrder}
+                    />
                     <Route component={NotFound} />
                   </Switch>
                 </div>

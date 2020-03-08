@@ -8,15 +8,20 @@ import {
   GET_CUSTOMER_ORDER,
   UPDATE_CUSTOMER_ORDER,
   REMOVE_CUSTOMER_ORDER,
-  SEND_ORDER_EMAIL
+  SEND_ORDER_EMAIL,
+  GET_ALL_ORDERS,
+  CLEAR_ORDERS,
+  FILTER_ORDERS,
+  CLEAR_FILTER
 } from '../types';
 
 const OrderState = props => {
   const initialState = {
     orders: [],
     // current: null,
-    // filtered: null,
+    filtered: null,
     result: null,
+    status: 'ordered',
     error: null
   };
 
@@ -93,18 +98,49 @@ const OrderState = props => {
     }
   };
 
+  // Get All Order for admin
+  const getAllOrder = async () => {
+    try {
+      const res = await axios.get('/api/orders/adminorders');
+
+      dispatch({ type: GET_ALL_ORDERS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ORDER_ERROR, payload: err.message });
+    }
+  };
+
+  // Clear Orders
+  const clearOrders = () => {
+    dispatch({ type: CLEAR_ORDERS });
+  };
+
+  // Filter Orders
+  const filterOrders = text => {
+    dispatch({ type: FILTER_ORDERS, payload: text });
+  };
+
+  // Clear Filter
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
+
   return (
     <OrderContext.Provider
       value={{
         orders: state.orders,
-        current: state.current,
         filtered: state.filtered,
+        status: state.status,
+        result: state.result,
         error: state.error,
         addOrder,
         getOrder,
         updateOrder,
         removeOrder,
-        sendEmail
+        sendEmail,
+        getAllOrder,
+        clearOrders,
+        filterOrders,
+        clearFilter
       }}
     >
       {props.children}

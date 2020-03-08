@@ -13,7 +13,7 @@ const CartItem = ({ order }) => {
 
   const [update, setUpdate] = useState({
     ...order,
-    price: 1
+    quantity: 1
   });
 
   // state for dropdown list

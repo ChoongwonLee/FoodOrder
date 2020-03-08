@@ -69,21 +69,25 @@ router.get('/', auth, async (req, res) => {
 // @desc      Update order
 // @access    Private
 router.put('/:id', auth, async (req, res) => {
-  const { /*address,*/ quantity, price } = req.body;
+  const { quantity, price, status } = req.body;
 
   const orderFields = {};
-  // if (address) orderFields.address = address;
   if (quantity) orderFields.quantity = quantity;
-  if (price) orderFields.quantity = quantity;
+  if (price) orderFields.price = price;
+  if (status) orderFields.status = status;
 
   try {
     let order = await Order.findById(req.params.id);
 
     if (!order) return res.status(404).json({ msg: 'Order not found!' });
 
-    // Make sure customer owns menu
-    if (order.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
+    const admin = await User.findOne({ role: 0 });
+
+    if (!admin) {
+      // Make sure customer owns menu
+      if (order.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'Not authorized' });
+      }
     }
 
     order = await Order.findByIdAndUpdate(
@@ -108,9 +112,13 @@ router.delete('/:id', auth, async (req, res) => {
 
     if (!order) return res.status(404).json({ msg: 'Order not found' });
 
-    // Make sure customer owns menu
-    if (order.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
+    const admin = await User.findOne({ role: 0 });
+
+    if (!admin) {
+      // Make sure customer owns menu
+      if (order.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'Not authorized' });
+      }
     }
 
     await Order.findByIdAndRemove(req.params.id);
@@ -162,7 +170,7 @@ router.get('/adminorders', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (user) {
-      const orders = await Order.find();
+      const orders = await Order.find().sort({ date: -1 });
       res.json(orders);
     } else {
       return res.status(401).json({ msg: 'Not authorized' });

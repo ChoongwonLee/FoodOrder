@@ -4,7 +4,11 @@ import {
   GET_CUSTOMER_ORDER,
   UPDATE_CUSTOMER_ORDER,
   REMOVE_CUSTOMER_ORDER,
-  SEND_ORDER_EMAIL
+  SEND_ORDER_EMAIL,
+  GET_ALL_ORDERS,
+  CLEAR_ORDERS,
+  FILTER_ORDERS,
+  CLEAR_FILTER
 } from '../types';
 // eslint-disable-next-line
 import OrderContext from './orderContext';
@@ -18,6 +22,7 @@ export default (state, action) => {
         loading: false
       };
     case GET_CUSTOMER_ORDER:
+    case GET_ALL_ORDERS:
       return {
         ...state,
         orders: action.payload,
@@ -41,6 +46,32 @@ export default (state, action) => {
       return {
         ...state,
         result: action.payload
+      };
+    case CLEAR_ORDERS:
+      return {
+        ...state,
+        orders: [],
+        filtered: null,
+        result: null,
+        status: 'ordered',
+        error: null
+      };
+    case FILTER_ORDERS:
+      return {
+        ...state,
+        filtered: state.orders.filter(order => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return (
+            order.customer.match(regex) ||
+            order.address.match(regex) ||
+            order.status.match(regex)
+          );
+        })
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null
       };
     case ORDER_ERROR:
       return {
