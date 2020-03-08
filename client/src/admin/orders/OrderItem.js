@@ -84,13 +84,7 @@ const OrderItem = ({ order }) => {
         )}
       </ul>
       <form onSubmit={onSubmit}>
-        <input
-          type='radio'
-          name='status'
-          value='ordered'
-          checked={status === 'ordered'}
-          onChange={onChange}
-        />{' '}
+        <input type='radio' name='status' value='ordered' onChange={onChange} />{' '}
         Ordered{' '}
         <input
           type='radio'

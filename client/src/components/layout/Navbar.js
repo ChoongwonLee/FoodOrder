@@ -65,9 +65,6 @@ const Navbar = props => {
             <Link to='/admin/orders'>Orders</Link>
           </li>
           <li>
-            <Link to='/admin/customers'>Customers</Link>
-          </li>
-          <li>
             <a onClick={onLogout} href='#!'>
               <i className='fas fa-sign-out-alt' />{' '}
               <span className='hide-sm'>Logout</span>

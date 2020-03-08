@@ -16,10 +16,10 @@ const AdminHome = () => {
         <h1 className='text-center text-primary'>Admin Tools</h1>
       </div>
       <br />
-      <div className='grid-3'>
+      <div className='grid-2'>
         <div className='card bg-light'>
           <h2 className='text-center'>Menus: </h2>
-          <p className='text-center'>Create, Read, Update, Delete menus</p>
+          <p className='text-center'>Manage menus</p>
           <br />
           <Link to='/admin/menus'>
             <button className='btn btn-dark btn-block'>Go</button>
@@ -32,13 +32,6 @@ const AdminHome = () => {
           <Link to='/admin/orders'>
             <button className='btn btn-dark btn-block'>Go</button>
           </Link>
-        </div>
-        <div className='card bg-light'>
-          <h2 className='text-center'>Customers: </h2>
-          <p className='text-center'>Mange Customers</p>
-          <br />
-          <Link to='/admin/customers'></Link>
-          <button className='btn btn-dark btn-block'>Go</button>
         </div>
       </div>
     </div>
