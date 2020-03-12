@@ -11,7 +11,7 @@ const ProductItem = ({ menu }) => {
   return (
     <div className='card bg-light grid-2'>
       <div>
-        <h3 className='text-primary lead menuTitle'>{title} </h3>
+        <h3 className='text-primary text-center lead menu-title'>{title} </h3>
         <ul className='list'>
           {ingredients && (
             <li>
@@ -42,7 +42,7 @@ const ProductItem = ({ menu }) => {
         </p>
       </div>
       <div className='imageBox'>
-        <span className='menuImage'>
+        <span className='menu-image'>
           <img
             src={`http://localhost:8000/${foodImage}`}
             alt='foodImage'

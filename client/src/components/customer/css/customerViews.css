@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.menuTitle {
+.menu-title {
   text-align: left;
 }
-.menuImage {
+.menu-image {
   float: right;
 }
 .selected-card {
@@ -11,7 +11,7 @@
   border: none;
   margin: 0.7rem 0;
 }
-.selectedImage {
+.selected-image {
   width: 300px;
   height: 250px;
 }
@@ -21,12 +21,16 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
 }
+.cart-image {
+  width: 120px;
+  height: 100px;
+}
 
 @media (max-width: 700px) {
-  .menuImage {
+  .menu-image {
     float: none;
   }
-  .menuTitle,
+  .menu-title,
   .imageBox,
   .chooseButton {
     text-align: center;
@@ -36,13 +40,9 @@
     width: 200px;
     text-align: center;
     justify-content: center;
-    /* margin: 0 0 0 0;
-    padding: 0 0 0 0; */
-    /* margin-right: auto;
-    margin-left: auto; */
     margin: auto;
   }
-  .selectedImage {
+  .selected-image {
     width: 180px;
     height: 150px;
   }
@@ -58,5 +58,18 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 1rem;
+  }
+  .cart-image {
+    width: 72px;
+    height: 60px;
+  }
+  .btn-checkout-mobile {
+    display: block;
+    width: 100%;
+    margin: auto;
+  }
+  .select-mobile {
+    width: auto;
+    size: 0.5rem;
   }
 }

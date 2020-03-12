@@ -1,29 +1,37 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import '../customer/css/customerViews.css';
 
-const OrderConfirmation = () => {
+const OrderConfirmation = props => {
   const authContext = useContext(AuthContext);
 
-  const { user } = authContext;
+  const { user, isAuthenticated } = authContext;
+
+  if (!isAuthenticated) {
+    props.history.push('/');
+  }
 
   return (
     <div className='container'>
-      <h2>
-        Thank you for using food mall, <strong>{user.name}!</strong>{' '}
-      </h2>
-      <h3>We've received your order.</h3>
+      <p className='text-center s-large'>
+        Thank you for your order,{' '}
+        <span className='text-primary'>
+          <strong>{user.name}</strong>
+        </span>
+        !{' '}
+      </p>
+      <p className='text-center lead'>We've received your order.</p>
       {user.email && (
-        <h3>
+        <p className='text-center lead'>
           The order confirmation will be shortly sent to{' '}
-          <strong>{user.email}</strong>
-        </h3>
+          <span className='text-primary'>
+            <strong>{user.email}</strong>
+          </span>
+        </p>
       )}
       <br />
-      <div
-        className='all-center'
-        style={{ display: 'flex', justifyContent: 'center' }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Link to='/'>
           <button className='btn btn-primary'>To Home</button>
         </Link>

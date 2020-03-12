@@ -78,7 +78,7 @@ const SelectDetail = props => {
           <img
             src={`http://localhost:8000/${current && current.foodImage}`}
             alt='foodImage'
-            className='selectedImage'
+            className='selected-image'
           />
         </div>
         <div className='card bg-light mobile-card'>

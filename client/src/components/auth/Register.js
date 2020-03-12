@@ -61,12 +61,14 @@ const Register = props => {
 
   return (
     <div className='form-container'>
-      <h1>
+      <h1 className='s-large'>
         Account <span className='text-primary'>Register</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
-          <label htmlFor='name'>Name</label>
+          <label htmlFor='name' className='sub'>
+            Name
+          </label>
           <input
             type='text'
             name='name'
@@ -76,7 +78,9 @@ const Register = props => {
           />
         </div>
         <div className='form-group'>
-          <label htmlFor='email'>Email Address</label>
+          <label htmlFor='email' className='sub'>
+            Email Address
+          </label>
           <input
             type='email'
             name='email'
@@ -86,7 +90,9 @@ const Register = props => {
           />
         </div>
         <div className='form-group'>
-          <label htmlFor='password'>Password</label>
+          <label htmlFor='password' className='sub'>
+            Password
+          </label>
           <input
             type='password'
             name='password'
@@ -97,7 +103,9 @@ const Register = props => {
           />
         </div>
         <div className='form-group'>
-          <label htmlFor='password2'>Confirm Password</label>
+          <label htmlFor='password2' className='sub'>
+            Confirm Password
+          </label>
           <input
             type='password'
             name='password2'

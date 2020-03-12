@@ -5,7 +5,7 @@ import OrderContext from '../../context/order/orderContext';
 
 const OrderItem = ({ order }) => {
   const orderContext = useContext(OrderContext);
-  const { updateOrder, removeOrder } = orderContext;
+  const { updateOrder, removeOrder, orders } = orderContext;
 
   const {
     _id,
@@ -36,7 +36,7 @@ const OrderItem = ({ order }) => {
 
   return (
     <div className='card bg-light'>
-      <p className='text-primary text-left'>
+      <p className='text-primary text-left' className='sub'>
         <label htmlFor='status'>Status: </label>{' '}
         <span
           style={{ float: 'right' }}
@@ -50,37 +50,52 @@ const OrderItem = ({ order }) => {
       <ul className='list'>
         {customer && (
           <li>
-            <label htmlFor='Customer'>Customer: </label>
-            {customer}
+            <label htmlFor='Customer' className='sub'>
+              Customer:{' '}
+            </label>
+            <p className='sub'>{customer}</p>
           </li>
         )}
         {address && (
           <li>
-            <label htmlFor='Address'>Address: </label>
-            {address}
+            <label htmlFor='Address' className='sub'>
+              Address:{' '}
+            </label>
+            <p className='sub'>{address}</p>
           </li>
         )}
         {menuTitle && (
           <li>
-            <label htmlFor='Menu'>Menu: </label>
-            {menuTitle}
+            <label htmlFor='Menu' className='sub'>
+              Menu:{' '}
+            </label>
+            <p className='sub'>{menuTitle}</p>
           </li>
         )}
         {price && (
           <li>
-            <label htmlFor='Menu Price'>Menu Price: </label>$ {price}
+            <label htmlFor='Menu Price' className='sub'>
+              Price:{' '}
+            </label>
+            <p className='sub'>${(price * quantity).toFixed(2)}</p>
           </li>
         )}
         {quantity && (
           <li>
-            <label htmlFor='Quantity'>Quantity: </label>
-            {quantity}
+            <label htmlFor='Quantity' className='sub'>
+              Quantity:{' '}
+            </label>
+            <p className='sub'>{quantity}</p>
           </li>
         )}
         {date && (
           <li>
-            <label htmlFor='Date'>Date: </label>
-            {moment(date).format('YYYY MMMM Do HH:mm:ss')}
+            <label htmlFor='Date' className='sub'>
+              Date:{' '}
+            </label>
+            <p className='sub'>
+              {moment(date).format('YYYY MMMM Do HH:mm:ss')}
+            </p>
           </li>
         )}
       </ul>
@@ -92,13 +107,11 @@ const OrderItem = ({ order }) => {
           name='status'
           value='delivered'
           onChange={onChange}
-        />{' '}
-        Delivered {'   '}
-        <input
-          type='submit'
-          value='Update'
-          className='btn btn-primary btn-sm'
         />
+        Delivered &nbsp;&nbsp;
+        <button type='submit' className='btn btn-primary btn-sm btn-mobile'>
+          Update
+        </button>
       </form>
       <p>
         <button

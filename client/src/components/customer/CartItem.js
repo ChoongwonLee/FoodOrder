@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import OrderContext from '../../context/order/orderContext';
-
-const imageSize = { width: '120px', height: '100px' };
+import '../../components/customer/css/customerViews.css';
 
 const CartItem = ({ order }) => {
   const orderContext = useContext(OrderContext);
@@ -44,12 +43,16 @@ const CartItem = ({ order }) => {
           <img
             src={`http://localhost:8000/${menuImage}`}
             alt='foodImage'
-            style={imageSize}
+            className='cart-image'
           />
         </td>
         <td className='td'>{menuTitle}</td>
         <td className='td'>
-          <select value={option.quantity} onChange={handleChange}>
+          <select
+            value={option.quantity}
+            onChange={handleChange}
+            className='select-mobile'
+          >
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -59,7 +62,10 @@ const CartItem = ({ order }) => {
         </td>
         <td className='td'>{price * quantity}</td>
         <td className='td'>
-          <button className='btn btn-danger btn-sm' onClick={handleRemove}>
+          <button
+            className='btn btn-danger btn-sm btn-table-mobile'
+            onClick={handleRemove}
+          >
             Remove
           </button>
         </td>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import OrderContext from '../../context/order/orderContext';
 import AuthContext from '../../context/auth/authContext';
 import CartItem from './CartItem';
+import '../../components/customer/css/customerViews.css';
 
 const Cart = props => {
   const ordercontext = useContext(OrderContext);
@@ -61,7 +62,10 @@ const Cart = props => {
         </tbody>
       </table>
       <br />
-      <button className='btn btn-primary' onClick={handleCheckout}>
+      <button
+        className='btn btn-primary btn-checkout-mobile'
+        onClick={handleCheckout}
+      >
         Check Out
       </button>
     </div>

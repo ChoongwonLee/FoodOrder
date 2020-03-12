@@ -43,12 +43,14 @@ const Login = props => {
   return (
     <div className='container'>
       <div className='form-container'>
-        <h1>
+        <h1 className='s-large'>
           Account <span className='text-primary'>Login</span>
         </h1>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
-            <label htmlFor='email'>Email Address</label>
+            <label htmlFor='email' className='sub'>
+              Email Address
+            </label>
             <input
               type='email'
               name='email'
@@ -58,7 +60,9 @@ const Login = props => {
             />
           </div>
           <div className='form-group'>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password' className='sub'>
+              Password
+            </label>
             <input
               type='password'
               name='password'
@@ -75,12 +79,12 @@ const Login = props => {
         </form>
         <br />
         <div className='card'>
-          <h2>To test admin mode: </h2>
-          <p>Login with</p>
-          <p>
+          <h2 className='lead'>To test admin mode: </h2>
+          <p className='sub'>Login with</p>
+          <p className='sub'>
             <span className='text-primary'>bigstep810@gmail.com</span>
           </p>
-          <p>
+          <p className='sub'>
             <span className='text-primary'>1111</span>
           </p>
         </div>
