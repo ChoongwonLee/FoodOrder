@@ -1,18 +1,23 @@
 import React, { useContext, useEffect } from 'react';
-import axios from 'axios';
-// import { Link } from 'react-router-dom';
 import OrderContext from '../../context/order/orderContext';
+import AuthContext from '../../context/auth/authContext';
 import CartItem from './CartItem';
 
 const Cart = props => {
   const ordercontext = useContext(OrderContext);
+  const authContext = useContext(AuthContext);
 
   const { orders, loading, getOrder, sendEmail } = ordercontext;
+  const { isAuthenticated } = authContext;
 
   useEffect(() => {
     getOrder();
     // eslint-disable-next-line
   }, [orders]);
+
+  if (!authContext.isAuthenticated) {
+    props.history.push('/');
+  }
 
   if (orders.length === 0 && !loading) {
     return <h4>No order item found. Please select your food.</h4>;

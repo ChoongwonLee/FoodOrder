@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
+import Home from './components/pages/Home';
 import CustomerForm from './components/customer/CustomerForm';
 import AdminHome from './admin/AdminHome';
 import AdminMenu from './admin/AdminMenu';
@@ -38,7 +39,8 @@ const App = () => {
                 <div className='container'>
                   <Alerts />
                   <Switch>
-                    <Route exact path='/' component={CustomerForm} />
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/customer' component={CustomerForm} />
                     <Route exact path='/about' component={About} />
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/login' component={Login} />

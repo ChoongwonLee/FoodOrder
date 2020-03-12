@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.menuTitle {
+  text-align: left;
+}
+.menuImage {
+  float: right;
+}
+.selected-card {
+  padding: 1rem;
+  border: none;
+  margin: 0.7rem 0;
+}
+.selectedImage {
+  width: 300px;
+  height: 250px;
+}
+.select-detail-grid,
+.select-detail-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .menuImage {
+    float: none;
+  }
+  .menuTitle,
+  .imageBox,
+  .chooseButton {
+    text-align: center;
+    justify-content: center;
+  }
+  .selected-card {
+    width: 200px;
+    text-align: center;
+    justify-content: center;
+    /* margin: 0 0 0 0;
+    padding: 0 0 0 0; */
+    /* margin-right: auto;
+    margin-left: auto; */
+    margin: auto;
+  }
+  .selectedImage {
+    width: 180px;
+    height: 150px;
+  }
+  .mobile-card {
+    height: 280px;
+  }
+  .select-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0rem;
+  }
+  .select-detail-buttons {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1rem;
+  }
+}

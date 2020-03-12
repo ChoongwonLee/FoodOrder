@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AuthContext from '../../context/auth/authContext';
 import MenuContext from '../../context/menu/menuContext';
 // import OrderContext from '../../context/order/orderContext';
@@ -39,11 +40,19 @@ const MenuSelection = props => {
       </div>
       <MenuFilter />
       {menus !== null && !loading ? (
-        <div>
+        <TransitionGroup>
           {filtered !== null
-            ? filtered.map(menu => <ProductItem key={menu._id} menu={menu} />)
-            : menus.map(menu => <ProductItem key={menu._id} menu={menu} />)}
-        </div>
+            ? filtered.map(menu => (
+                <CSSTransition key={menu._id} timeout={1000} classNames='item'>
+                  <ProductItem menu={menu} />
+                </CSSTransition>
+              ))
+            : menus.map(menu => (
+                <CSSTransition key={menu._id} timeout={1000} classNames='item'>
+                  <ProductItem menu={menu} />
+                </CSSTransition>
+              ))}
+        </TransitionGroup>
       ) : (
         <Spinner />
       )}

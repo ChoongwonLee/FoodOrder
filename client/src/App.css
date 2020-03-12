@@ -202,6 +202,10 @@ img {
   margin: 0;
 }
 
+.btn-center {
+  text-align: center;
+}
+
 .btn-block {
   display: block;
   width: 100%;
@@ -427,8 +431,20 @@ table th {
     font-size: 2rem;
   }
 
+  .s-large {
+    font-size: 1.5rem;
+  }
+
   .lead {
     font-size: 1rem;
+  }
+
+  .sub {
+    font-size: 0.8rem;
+  }
+
+  .small {
+    font-size: 0.75rem;
   }
 
   /* Navbar */

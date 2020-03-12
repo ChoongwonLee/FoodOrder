@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import OrderContext from '../../context/order/orderContext';
 
 const OrderItem = ({ order }) => {
@@ -79,7 +80,7 @@ const OrderItem = ({ order }) => {
         {date && (
           <li>
             <label htmlFor='Date'>Date: </label>
-            {date}
+            {moment(date).format('YYYY MMMM Do HH:mm:ss')}
           </li>
         )}
       </ul>

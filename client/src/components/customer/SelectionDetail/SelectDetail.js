@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import MenuContext from '../../../context/menu/menuContext';
 import AuthContext from '../../../context/auth/authContext';
 import OrderContext from '../../../context/order/orderContext';
+import '../css/customerViews.css';
 
 // Modal
 const modalStyles = {
@@ -17,8 +18,6 @@ const modalStyles = {
   }
 };
 Modal.setAppElement('body');
-
-const imageSize = { width: '300px', height: '250px' };
 
 const SelectDetail = props => {
   const menuContext = useContext(MenuContext);
@@ -69,45 +68,51 @@ const SelectDetail = props => {
   return (
     <div className='container'>
       <div className='text-center'>
-        <h1 className='text-primary'>{current && current.title}</h1>
+        <h1 className='text-primary s-large'>{current && current.title}</h1>
       </div>
-      <div className='card grid-2' style={{ border: '0.5px solid' }}>
-        <div className='card' style={{ border: 'none' }}>
+      <div
+        className='card select-detail-grid'
+        style={{ border: '0.5px solid' }}
+      >
+        <div className='selected-card'>
           <img
             src={`http://localhost:8000/${current && current.foodImage}`}
             alt='foodImage'
-            style={imageSize}
+            className='selectedImage'
           />
         </div>
-        <div className='card bg-light'>
+        <div className='card bg-light mobile-card'>
           <ul className='list'>
             {current && (
               <li>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3>Ingredients</h3>
+                  <h3 className='lead hide-sm'>Ingredients</h3>
                   <i className='fas fa-carrot' />
                 </div>
-                <p>{current.ingredients}</p>
+                <p className='text-center small'>{current.ingredients}</p>
               </li>
             )}
             <br />
             {current && (
               <li>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <h3>Description</h3>
+                  <h3 className='lead hide-sm'>Description</h3>
                   <i className='far fa-comment-alt' />
                 </div>
-                <p>{current.description}</p>
+                <p className='text-center small'>{current.description}</p>
               </li>
             )}
             <br />
           </ul>
-          <div className='card grid-2' style={{ border: 'none' }}>
-            <button className='btn btn-primary btn-sm' onClick={handleAddOrder}>
+          <div className='select-detail-buttons'>
+            <button
+              className='btn btn-primary btn-sm add-button'
+              onClick={handleAddOrder}
+            >
               Add to order
             </button>
             <button
-              className='btn btn-dark btn-sm'
+              className='btn btn-dark btn-sm goback-button'
               onClick={() => props.history.goBack()}
             >
               Go back

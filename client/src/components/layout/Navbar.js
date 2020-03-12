@@ -10,7 +10,7 @@ const Navbar = props => {
   const menuContext = useContext(MenuContext);
   const orderContext = useContext(OrderContext);
 
-  const { isAuthenticated, isAdmin, logout /*user*/ } = authContext;
+  const { isAuthenticated, isAdmin, logout } = authContext;
   const { clearMenus } = menuContext;
   const { clearOrders } = orderContext;
 
@@ -29,7 +29,7 @@ const Navbar = props => {
         <Link to='/'>Home</Link>
       </li>
       <li>
-        <Link to='/about'>About</Link>
+        <Link to='/customer'>Order</Link>
       </li>
       {!isAuthenticated && (
         <Fragment>
@@ -78,7 +78,9 @@ const Navbar = props => {
   return (
     <div className='navbar bg-dark'>
       <h1>
-        <i className={icon} /> {title}
+        <Link to='/'>
+          <i className={icon} /> {title}
+        </Link>
       </h1>
       <ul>{links}</ul>
     </div>

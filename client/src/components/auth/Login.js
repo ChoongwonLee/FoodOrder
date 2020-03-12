@@ -41,37 +41,50 @@ const Login = props => {
   };
 
   return (
-    <div className='form-container'>
-      <h1>
-        Account <span className='text-primary'>Login</span>
-      </h1>
-      <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='email'>Email Address</label>
+    <div className='container'>
+      <div className='form-container'>
+        <h1>
+          Account <span className='text-primary'>Login</span>
+        </h1>
+        <form onSubmit={onSubmit}>
+          <div className='form-group'>
+            <label htmlFor='email'>Email Address</label>
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={onChange}
+              required
+            />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='password'>Password</label>
+            <input
+              type='password'
+              name='password'
+              value={password}
+              onChange={onChange}
+              required
+            />
+          </div>
           <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={onChange}
-            required
+            type='submit'
+            value='Login'
+            className='btn btn-primary btn-block'
           />
+        </form>
+        <br />
+        <div className='card'>
+          <h2>To test admin mode: </h2>
+          <p>Login with</p>
+          <p>
+            <span className='text-primary'>bigstep810@gmail.com</span>
+          </p>
+          <p>
+            <span className='text-primary'>1111</span>
+          </p>
         </div>
-        <div className='form-group'>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <input
-          type='submit'
-          value='Login'
-          className='btn btn-primary btn-block'
-        />
-      </form>
+      </div>
     </div>
   );
 };
