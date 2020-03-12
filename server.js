@@ -16,10 +16,6 @@ app.use(express.urlencoded({ extended: false }));
 // app.use('/api/menus/uploads', express.static('uploads'));
 app.use('/uploads', express.static('uploads'));
 
-app.get('/', (req, res) => {
-  res.json({ msg: 'Welcome to food order API...' });
-});
-
 // Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
