@@ -29,5 +29,4 @@ yarn-error.log*
 dev.env
 
 # upload files
-/uploads
 /client/public/uploads
