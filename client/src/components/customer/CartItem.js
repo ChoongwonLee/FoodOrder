@@ -41,7 +41,7 @@ const CartItem = ({ order }) => {
       <tr>
         <td className='td'>
           <img
-            src={`http://localhost:8000/${menuImage}`}
+            src={`https://won-food-mall.herokuapp.com/${menuImage}`}
             alt='foodImage'
             className='cart-image'
           />
