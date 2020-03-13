@@ -44,7 +44,7 @@ const ProductItem = ({ menu }) => {
       <div className='imageBox'>
         <span className='menu-image'>
           <img
-            src={`https://won-food-mall.herokuapp.com/${foodImage}`}
+            src={`https://won-food-mall.herokuapp.com/uploads/${foodImage}`}
             alt='foodImage'
             style={imageSize}
           />
