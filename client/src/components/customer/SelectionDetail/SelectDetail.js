@@ -76,7 +76,8 @@ const SelectDetail = props => {
       >
         <div className='selected-card'>
           <img
-            src={`http://localhost:8000/${current && current.foodImage}`}
+            src={`https://won-food-mall.herokuapp.com/${current &&
+              current.foodImage}`}
             alt='foodImage'
             className='selected-image'
           />
