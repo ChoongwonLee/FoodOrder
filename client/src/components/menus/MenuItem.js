@@ -21,7 +21,7 @@ const MenuItem = ({ menu }) => {
         {title}{' '}
         <span style={{ float: 'right' }}>
           <img
-            src={`http://localhost:8000/${foodImage}`}
+            src={`https://won-food-mall.herokuapp.com//${foodImage}`}
             alt='foodImage'
             style={imageSize}
           />
