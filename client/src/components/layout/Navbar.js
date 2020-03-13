@@ -26,15 +26,23 @@ const Navbar = props => {
   const links = (
     <Fragment>
       <li>
-        <Link to='/'>Home</Link>
+        <Link to='/'>
+          <i className='fas fa-home' /> <span className='hide-sm'>Home</span>
+        </Link>
       </li>
       <li>
-        <Link to='/customer'>Order</Link>
+        <Link to='/customer'>
+          <i className='fas fa-utensils' />{' '}
+          <span className='hide-sm'>Order</span>
+        </Link>
       </li>
       {!isAuthenticated && (
         <Fragment>
           <li>
-            <Link to='/register'>Register</Link>
+            <Link to='/register'>
+              <i className='far fa-id-badge' />{' '}
+              <span className='hide-sm'>Register</span>
+            </Link>
           </li>
           <li>
             <Link to='/login'>Admin</Link>
@@ -45,7 +53,8 @@ const Navbar = props => {
         <Fragment>
           <li>
             <Link to='/cart'>
-              <i className='fas fa-shopping-cart' />
+              <i className='fas fa-shopping-cart' />{' '}
+              <span className='hide-sm'>Cart</span>
             </Link>
           </li>
           <li>

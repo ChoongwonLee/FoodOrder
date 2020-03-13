@@ -1,29 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import AlertContext from '../../context/alert/alertContext';
+import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
-// Todo: Add google map geo code api to validate address
 const CustomerForm = props => {
-  // const alertContext = useContext(AlertContext);
+  const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  // const { setAlert } = alertContext;
-  const {
-    registerCustomer,
-    error,
-    /*clearErrors,*/ isAuthenticated
-  } = authContext;
+  const { setAlert } = alertContext;
+
+  const { registerCustomer, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
       props.history.push('/selection');
     }
 
-    // // if customer exists, login customer and redirect to menu selection
-    // if (error === 'Email already exists') {
-    //   setAlert(error, 'danger');
-    //   clearErrors();
-    // }
+    // if customer has same email address as admin,
+    // prevent deleting admin
+    if (error === 'Same email as admin. Try different email.') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
   }, [error, isAuthenticated, props.history]);
 
   const [customer, setCustomer] = useState({

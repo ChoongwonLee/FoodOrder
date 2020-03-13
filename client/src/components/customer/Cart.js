@@ -9,7 +9,6 @@ const Cart = props => {
   const authContext = useContext(AuthContext);
 
   const { orders, loading, getOrder, sendEmail } = ordercontext;
-  const { isAuthenticated } = authContext;
 
   useEffect(() => {
     getOrder();

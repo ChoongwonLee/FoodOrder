@@ -110,7 +110,11 @@ router.post(
       let user = await User.findOne({ email });
 
       if (user) {
-        // res.status(400).json({ msg: 'Email already exists' });
+        if (user.role === 0) {
+          return res
+            .status(401)
+            .json({ msg: 'Same email as admin. Try different email.' });
+        }
         await User.deleteOne({ email });
       }
 

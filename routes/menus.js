@@ -107,55 +107,6 @@ router.post(
   }
 );
 
-// // @route     POST api/menus
-// // @desc      Add new menu
-// // @access    Private
-// router.post(
-//   '/',
-//   [
-//     auth,
-//     check('title', 'Please add menu title')
-//       .not()
-//       .isEmpty(),
-//     check('ingredients', 'Please add ingredients')
-//       .not()
-//       .isEmpty(),
-//     check('description', 'Please add description')
-//       .not()
-//       .isEmpty(),
-//     check('price', 'Please add price')
-//       .not()
-//       .isEmpty(),
-//     upload.single('foodImage')
-//   ],
-//   async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty) {
-//       return res.status(400).json({ errors: errors.array() });
-//     }
-
-//     const { title, ingredients, description, price } = req.body;
-//     console.log(req.file);
-//     try {
-//       const newMenu = new Menus({
-//         user: req.user.id,
-//         title,
-//         ingredients,
-//         description,
-//         foodImage: req.file.path,
-//         price
-//       });
-
-//       const menu = await newMenu.save();
-
-//       res.json(menu);
-//     } catch (err) {
-//       console.error(err.message);
-//       res.status(500).json({ error: err });
-//     }
-//   }
-// );
-
 // @route     GET api/menus
 // @desc      Get all menus
 // @access    Public
@@ -213,43 +164,6 @@ router.put('/:id', auth, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-// // @route     PUT api/menus/:id
-// // @desc      Update menu
-// // @access    Private
-// router.put('/:id', [auth, upload.single('foodImage')], async (req, res) => {
-//   console.log(req.file);
-//   const { title, ingredients, description, price } = req.body;
-
-//   const menuFields = {};
-//   if (title) menuFields.title = title;
-//   if (ingredients) menuFields.ingredients = ingredients;
-//   if (description) menuFields.description = description;
-//   if (price) menuFields.price = price;
-//   if (req.file.path) menuFields.foodImage = req.file.path;
-
-//   try {
-//     let menu = await Menus.findById(req.params.id);
-
-//     if (!menu) return res.status(404).json({ msg: 'Menu not found' });
-
-//     // Make sure admin owns menu
-//     if (menu.admin.toString() !== req.admin.id) {
-//       return res.status(401).json({ msg: 'Not authorized' });
-//     }
-
-//     menu = await Menus.findOneAndUpdate(
-//       req.params.id,
-//       { $set: menuFields },
-//       { new: true }
-//     );
-
-//     res.json(menu);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).json({ error: err });
-//   }
-// });
 
 // @route     DELETE api/menus:id
 // @desc      Delte menu
