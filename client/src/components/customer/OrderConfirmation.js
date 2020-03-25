@@ -27,7 +27,7 @@ const OrderConfirmation = props => {
           The order confirmation will be sent to
           <span className='text-primary'>
             <strong>{user.email}</strong>
-          </span>
+          </span>{' '}
           soon.
         </p>
       )}

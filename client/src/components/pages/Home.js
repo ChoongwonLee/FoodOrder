@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className='container'>
       <div>
-        <FadeIn transitionDuration={3500}>
+        <FadeIn transitionDuration={2500}>
           <p className='text-dark text-center large hide-sm'>Welcome!</p>
         </FadeIn>
       </div>
@@ -46,10 +46,13 @@ const Home = () => {
       <div className='card bg-light'>
         <p className='text-primary text-center lead'>How to use this app?</p>
         <div style={{ justifyContent: 'center' }}>
-          <FadeIn transitionDuration={4500} delay={1200}>
+          <FadeIn transitionDuration={3500} delay={1000}>
             <p className='text-center sub'>1. Fill out delievery info.</p>
             <p className='text-center sub'>2. Select your food.</p>
             <p className='text-center sub'>3. Check your email.</p>
+            <p className='text-center text-primary sub'>
+              <strong>4. Test "Admin" mode!</strong>
+            </p>
           </FadeIn>
         </div>
         <br />
