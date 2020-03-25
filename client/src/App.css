@@ -55,6 +55,12 @@ img {
   margin-bottom: 1rem;
 }
 
+.s-large {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
 .large {
   font-size: 3rem;
   line-height: 1.2;

@@ -51,7 +51,8 @@ const MenuForm = () => {
       const res = await axios.post('/api/menus/upload', formData, config);
       setMenu({
         ...menu,
-        foodImage: res.data.path
+        // foodImage: res.data.path,
+        foodImage: res.data.key
       });
       // e.target.value = '';
     } catch (err) {
@@ -115,11 +116,12 @@ const MenuForm = () => {
         onChange={onChange}
         required
       />
-      <h5>{current ? 'Update' : 'Upload'} food image</h5>
+      <h4>{current ? 'Update' : 'Upload'} food image</h4>
       <input
         type='file'
         placeholder='Food Image'
         onChange={handleSelectedFile}
+        required
       />
       <div>
         <input

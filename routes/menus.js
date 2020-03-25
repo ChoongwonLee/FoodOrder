@@ -2,20 +2,38 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
 const auth = require('../middleware/auth');
 // const Admin = require('../models/Admin');
 const User = require('../models/User');
 const Menus = require('../models/Menus');
 
-// set food image storage
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  }
+// const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
+
+// aws.config.update({
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//   region: process.env.REGION
+// });
+
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  bucket: process.env.S3_BUCKET_NAME,
+  region: process.env.REGION
 });
+
+// // Instead of saving diskStorage, save it to AWS S3
+// // set food image storage
+// const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, './uploads/');
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, Date.now() + file.originalname);
+//   }
+// });
 
 const fileFilter = (req, file, cb) => {
   // to accept file
@@ -33,7 +51,14 @@ const fileFilter = (req, file, cb) => {
 // define how to store image
 const upload = multer({
   // dest: './uploads'
-  storage: storage,
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET_NAME,
+    acl: 'public-read',
+    key: function(req, file, cb) {
+      cb(null, Date.now().toString() + file.originalname);
+    }
+  }),
   limits: {
     fileSize: 1024 * 1024 * 5
   },
@@ -45,12 +70,13 @@ const upload = multer({
 // @access    Private
 router.post(
   '/upload',
-  [auth, upload.single('foodImage')],
+  upload.single('foodImage'),
   (req, res) => {
     return res.json({
       success: true,
-      path: res.req.file.path,
-      fileName: res.req.file.filename
+      key: res.req.file.key
+      // path: res.req.file.path,
+      // fileName: res.req.file.filename
     });
   },
   (error, req, res, next) => {

@@ -41,7 +41,7 @@ const CartItem = ({ order }) => {
       <tr>
         <td className='td'>
           <img
-            src={`https://won-food-mall.herokuapp.com/${menuImage}`}
+            src={`https://wonbucket.s3.us-east-2.amazonaws.com/${menuImage}`}
             alt='foodImage'
             className='cart-image'
           />

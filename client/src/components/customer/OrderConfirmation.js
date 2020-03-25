@@ -24,10 +24,11 @@ const OrderConfirmation = props => {
       <p className='text-center lead'>We've received your order.</p>
       {user.email && (
         <p className='text-center lead'>
-          The order confirmation will be shortly sent to{' '}
+          The order confirmation will be sent to
           <span className='text-primary'>
             <strong>{user.email}</strong>
           </span>
+          soon.
         </p>
       )}
       <br />
